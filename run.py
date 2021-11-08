@@ -64,7 +64,7 @@ def select_unit():
 
 def validate_weight(weight):
     '''
-    Validates the provided weight value.
+    Validate the provided weight value.
     '''
     try:
         weight = int(weight)
@@ -72,6 +72,26 @@ def validate_weight(weight):
             raise ValueError('The weight value must be between 1 and 500.')
     except ValueError as e:
         print(f'\nInvalid weight. {e} Please provide your weight again.')
+        return False
+    
+    return True
+
+
+def validate_height(height, unit):
+    '''
+    Validate the provided height value in cm.
+    '''
+    if unit == 'cm':
+        max_value = 250
+    else:
+        max_value = 100
+
+    try:
+        height = int(height)
+        if height < 1 or height > max_value:
+            raise ValueError(f'The height value must be between 1 and {max_value}.')
+    except ValueError as e:
+        print(f'\nInvalid height. {e} Please provide your height again.')
         return False
     
     return True
@@ -90,6 +110,19 @@ def collect_weight(unit):
         collect_weight(unit)
 
 
+def collect_height(unit):
+    '''
+    Collect the user's height in the selected unit
+    to access it later in the program.
+    '''
+    height = input(f'\nEnter your height in {unit}:\n')
+    
+    if validate_height(height, unit):
+            return int(height)
+    else:
+        collect_height(unit)
+
+
 def main():
     '''
     Run all the functions of the program.
@@ -99,8 +132,10 @@ def main():
     unit = select_unit()
     if unit == 1:
         weight_in_kg = collect_weight('kg')
-    if unit == 2:
+        collect_height('cm')
+    elif unit == 2:
         weight_in_lbs = collect_weight('pounds')
+        collect_height('inch')
 
 
 main()
