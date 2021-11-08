@@ -47,19 +47,20 @@ def select_unit():
     Allow the user to make a selection of the desired
     system of measurement to be used in the program
     '''
-    unit = input('\nPlease select the system of measurement you would like to use.\n'
-    '\nIf you would like to use the Metric system, please enter 1.\n'
-    'If you would like to use the Imperial system, please enter 2.\n')
-    
-    if unit == '1':
-        print('\nGreat, you have selected the Metric system.')
-        return 1
-    elif unit == '2':
-        print('\nGreat, you have selected the Imperial system.')
-        return 2
-    else:
-        print('\nInvalid selection. You need to enter 1 or 2 to select the desired unit.')
-        select_unit()
+    while True:
+        unit = input('\nPlease select the system of measurement you would like to use.\n'
+        '\nIf you would like to use the Metric system, please enter 1.\n'
+        'If you would like to use the Imperial system, please enter 2.\n')
+        
+        if unit == '1':
+            print('\nGreat, you have selected the Metric system.')
+            return 1
+        elif unit == '2':
+            print('\nGreat, you have selected the Imperial system.')
+            return 2
+        else:
+            print('\nInvalid selection. You need to enter 1 or 2 to select the desired unit.')
+            continue
 
 
 def validate_weight(weight):
@@ -102,12 +103,13 @@ def collect_weight(unit):
     Collect the user's weight in the selected unit
     to access it later in the program.
     '''
-    weight = input(f'\nEnter your weight in {unit}:\n')
+    while True:
+        weight = input(f'\nEnter your weight in {unit}:\n')
 
-    if validate_weight(weight):
-        return int(weight)
-    else:
-        collect_weight(unit)
+        if validate_weight(weight):
+            return int(weight)
+        else:
+            continue
 
 
 def collect_height(unit):
@@ -115,12 +117,13 @@ def collect_height(unit):
     Collect the user's height in the selected unit
     to access it later in the program.
     '''
-    height = input(f'\nEnter your height in {unit}:\n')
+    while True:
+        height = input(f'\nEnter your height in {unit}:\n')
 
-    if validate_height(height, unit):
-        return int(height)
-    else:
-        collect_height(unit)
+        if validate_height(height, unit):
+            return int(height)
+        else:
+            continue
 
 
 def convert_weight(weight_in_lbs):
