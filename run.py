@@ -50,7 +50,7 @@ def select_unit():
     unit = input('\nPlease select the system of measurement you would like to use.\n'
     '\nIf you would like to use the Metric system, please enter 1.\n'
     'If you would like to use the Imperial system, please enter 2.\n')
-
+    
     if unit == '1':
         print('\nGreat, you have selected the Metric system.')
         return 1
@@ -132,6 +132,15 @@ def convert_weight(weight_in_lbs):
     return int(round(weight_in_kg))
 
 
+def convert_height(height_in_inch):
+    '''
+    Convert the height in inch to cm
+    '''
+    height_in_cm = height_in_inch * 2.54
+
+    return int(round(height_in_cm))
+
+
 def main():
     '''
     Run all the functions of the program.
@@ -142,12 +151,13 @@ def main():
 
     if unit == 1:
         weight_in_kg = collect_weight('kg')
-        collect_height('cm')
+        height_in_cm = collect_height('cm')
     elif unit == 2:
         weight_in_lbs = collect_weight('pounds')
-        collect_height('inch')
+        height_in_inch = collect_height('inch')
 
         weight_in_kg = convert_weight(weight_in_lbs)
+        height_in_cm = convert_height(height_in_inch)
 
 
 main()
