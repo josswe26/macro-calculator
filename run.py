@@ -33,7 +33,7 @@ def welcome_message():
 
 def collect_name():
     '''
-    Collect the user name to be able
+    Collect the user's name to be able
     to access it later in the program
     '''
     name = input('\nTo proceed, please enter your name: \n')
@@ -62,6 +62,34 @@ def select_unit():
         select_unit()
 
 
+def validate_weight(weight):
+    '''
+    Validates the provided weight value.
+    '''
+    try:
+        weight = int(weight)
+        if weight < 1 or weight > 500:
+            raise ValueError('The weight value must be between 1 and 500.')
+    except ValueError as e:
+        print(f'\nInvalid weight. {e} Please provide your weight again.')
+        return False
+    
+    return True
+
+
+def collect_weight_in_kg():
+    '''
+    Collect the user's weight in kg.
+    to access it later in the program.
+    '''
+    weight = input('\nEnter your weight in kilograms:\n')
+
+    if validate_weight(weight):
+        return int(weight)
+    else:
+        collect_weight_in_kg()
+
+
 def main():
     '''
     Run all the functions of the program.
@@ -69,6 +97,8 @@ def main():
     welcome_message()
     name = collect_name()
     unit = select_unit()
+    if unit == 1:
+        weight_in_kg = collect_weight_in_kg()
 
 
 main()
