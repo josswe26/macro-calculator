@@ -77,17 +77,17 @@ def validate_weight(weight):
     return True
 
 
-def collect_weight_in_kg():
+def collect_weight(unit):
     '''
-    Collect the user's weight in kg.
+    Collect the user's weight in the selected unit
     to access it later in the program.
     '''
-    weight = input('\nEnter your weight in kilograms:\n')
+    weight = input(f'\nEnter your weight in {unit}:\n')
 
     if validate_weight(weight):
         return int(weight)
     else:
-        collect_weight_in_kg()
+        collect_weight(unit)
 
 
 def main():
@@ -98,7 +98,9 @@ def main():
     name = collect_name()
     unit = select_unit()
     if unit == 1:
-        weight_in_kg = collect_weight_in_kg()
+        weight_in_kg = collect_weight('kg')
+    if unit == 2:
+        weight_in_lbs = collect_weight('pounds')
 
 
 main()
