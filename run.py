@@ -8,8 +8,8 @@ def welcome_message():
     #  #  # #      #      #    # #    # ##  ## #           #   #    # 
     #  #  # #####  #      #      #    # # ## # #####       #   #    # 
     #  #  # #      #      #      #    # #    # #           #   #    # 
-    #  #  # #      #      #    # #    # #    # #           #   #    # 
-     ## ##  ###### ######  ####   ####  #    # ######      #    ####  
+    #  #  # #      #      #    # #    # #    # #           #   #    #
+     ## ##  ###### ######  ####   ####  #    # ######      #    ####
                                                                       
                    #     #                             
                    ##   ##   ##    ####  #####   ####  
@@ -50,7 +50,7 @@ def select_unit():
     unit = input('\nPlease select the system of measurement you would like to use.\n'
     '\nIf you would like to use the Metric system, please enter 1.\n'
     'If you would like to use the Imperial system, please enter 2.\n')
-    
+
     if unit == '1':
         print('\nGreat, you have selected the Metric system.')
         return 1
@@ -73,7 +73,7 @@ def validate_weight(weight):
     except ValueError as e:
         print(f'\nInvalid weight. {e} Please provide your weight again.')
         return False
-    
+
     return True
 
 
@@ -93,7 +93,7 @@ def validate_height(height, unit):
     except ValueError as e:
         print(f'\nInvalid height. {e} Please provide your height again.')
         return False
-    
+
     return True
 
 
@@ -116,11 +116,20 @@ def collect_height(unit):
     to access it later in the program.
     '''
     height = input(f'\nEnter your height in {unit}:\n')
-    
+
     if validate_height(height, unit):
-            return int(height)
+        return int(height)
     else:
         collect_height(unit)
+
+
+def convert_weight(weight_in_lbs):
+    '''
+    Convert the weight in lbs to kg
+    '''
+    weight_in_kg = weight_in_lbs / 2.205
+
+    return int(round(weight_in_kg))
 
 
 def main():
@@ -130,12 +139,15 @@ def main():
     welcome_message()
     name = collect_name()
     unit = select_unit()
+
     if unit == 1:
         weight_in_kg = collect_weight('kg')
         collect_height('cm')
     elif unit == 2:
         weight_in_lbs = collect_weight('pounds')
         collect_height('inch')
+
+        weight_in_kg = convert_weight(weight_in_lbs)
 
 
 main()
