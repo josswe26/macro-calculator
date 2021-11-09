@@ -3,32 +3,33 @@ def welcome_message():
     Display the welcome message.
     '''
     print('''
-    #     #                                                           
-    #  #  # ###### #       ####   ####  #    # ######    #####  ####  
-    #  #  # #      #      #    # #    # ##  ## #           #   #    # 
-    #  #  # #####  #      #      #    # # ## # #####       #   #    # 
-    #  #  # #      #      #      #    # #    # #           #   #    # 
+    #     #
+    #  #  # ###### #       ####   ####  #    # ######    #####  ####
+    #  #  # #      #      #    # #    # ##  ## #           #   #    #
+    #  #  # #####  #      #      #    # # ## # #####       #   #    #
+    #  #  # #      #      #      #    # #    # #           #   #    #
     #  #  # #      #      #    # #    # #    # #           #   #    #
      ## ##  ###### ######  ####   ####  #    # ######      #    ####
-                                                                      
-                   #     #                             
-                   ##   ##   ##    ####  #####   ####  
-                   # # # #  #  #  #    # #    # #    # 
-                   #  #  # #    # #      #    # #    # 
-                   #     # ###### #      #####  #    # 
-                   #     # #    # #    # #   #  #    # 
-                   #     # #    #  ####  #    #  ####  
-                                                       
-   #####                                                                
-  #     #   ##   #       ####  #    # #        ##   #####  ####  #####  
-  #        #  #  #      #    # #    # #       #  #    #   #    # #    # 
-  #       #    # #      #      #    # #      #    #   #   #    # #    # 
-  #       ###### #      #      #    # #      ######   #   #    # #####  
-  #     # #    # #      #    # #    # #      #    #   #   #    # #   #  
+
+                   #     #
+                   ##   ##   ##    ####  #####   ####
+                   # # # #  #  #  #    # #    # #    #
+                   #  #  # #    # #      #    # #    #
+                   #     # ###### #      #####  #    #
+                   #     # #    # #    # #   #  #    #
+                   #     # #    #  ####  #    #  ####
+
+   #####
+  #     #   ##   #       ####  #    # #        ##   #####  ####  #####
+  #        #  #  #      #    # #    # #       #  #    #   #    # #    #
+  #       #    # #      #      #    # #      #    #   #   #    # #    #
+  #       ###### #      #      #    # #      ######   #   #    # #####
+  #     # #    # #      #    # #    # #      #    #   #   #    # #   #
    #####  #    # ######  ####   ####  ###### #    #   #    ####  #    #
     ''')
 
-    print('\nUse this calculator to help you discover how much of each macronutrient you should eat every day to reach your goals.')
+    print('\nUse this calculator to help you discover how much of each '
+          'macronutrient you should eat every day to reach your goals.')
 
 
 def collect_name():
@@ -48,10 +49,13 @@ def select_unit():
     system of measurement to be used in the program
     '''
     while True:
-        unit = input('\nPlease select the system of measurement you would like to use.\n'
-        '\nIf you would like to use the Metric system, please enter 1.\n'
-        'If you would like to use the Imperial system, please enter 2.\n')
-        
+        unit = input('\nPlease select the system of measurement '
+                     'you would like to use.\n'
+                     '\nIf you would like to use the Metric system, '
+                     'please enter 1.\n'
+                     'If you would like to use the Imperial system, '
+                     'please enter 2.\n')
+
         if unit == '1':
             print('\nGreat, you have selected the Metric system.')
             return 1
@@ -59,7 +63,8 @@ def select_unit():
             print('\nGreat, you have selected the Imperial system.')
             return 2
         else:
-            print('\nInvalid selection. You need to enter 1 or 2 to select the desired unit.')
+            print('\nInvalid selection. You need to enter 1 or 2 '
+                  'to select the desired unit.')
             continue
 
 
@@ -90,7 +95,8 @@ def validate_height(height, unit):
     try:
         height = int(height)
         if height < 1 or height > max_value:
-            raise ValueError(f'The height value must be between 1 and {max_value}.')
+            raise ValueError(f'The height value must be between '
+                             '1 and {max_value}.')
     except ValueError as e:
         print(f'\nInvalid height. {e} Please provide your height again.')
         return False
@@ -144,6 +150,41 @@ def convert_height(height_in_inch):
     return int(round(height_in_cm))
 
 
+def select_gender():
+    '''
+    Allow the user to selct their gender
+    and return a dictionary including the gender and
+    the value assigned to it to be used in the program
+    '''
+    while True:
+        selection = input('\nPlease select your gender\n'
+                          '\nFor female, please enter 1.\n'
+                          'For male, please enter 2.\n')
+
+        if selection == '1':
+            print('\nFemale has been selected.')
+            gender_data = {
+                'gender': 'female',
+                'value': -161
+            }
+
+            return gender_data
+
+        elif selection == '2':
+            print('\nMale has been selected')
+            gender_data = {
+                'gender': 'male',
+                'value': 5
+            }
+
+            return gender_data
+
+        else:
+            print('\nInvalid selection. You need to enter 1 or 2 '
+                  'to select the desired unit.')
+            continue
+
+
 def main():
     '''
     Run all the functions of the program.
@@ -151,6 +192,11 @@ def main():
     welcome_message()
     name = collect_name()
     unit = select_unit()
+
+    weight_in_kg = None
+    weight_in_lbs = None
+    height_in_cm = None
+    height_in_inch = None
 
     if unit == 1:
         weight_in_kg = collect_weight('kg')
@@ -161,6 +207,8 @@ def main():
 
         weight_in_kg = convert_weight(weight_in_lbs)
         height_in_cm = convert_height(height_in_inch)
+
+    gender_data = select_gender()
 
 
 main()
