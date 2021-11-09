@@ -185,6 +185,35 @@ def select_gender():
             continue
 
 
+def validate_age(age):
+    '''
+    Validate the provided age value.
+    '''
+    try:
+        age = int(age)
+        if age < 1 or age > 120:
+            raise ValueError('The age value must be between 1 and 120.')
+    except ValueError as e:
+        print(f'\nInvalid age. {e} Please provide your age again.')
+        return False
+
+    return True
+
+
+def collect_age():
+    '''
+    Collect the user's age to
+    access it later in the program.
+    '''
+    while True:
+        age = input(f'\nPlease provide your age:\n')
+
+        if validate_age(age):
+            return int(age)
+        else:
+            continue
+
+
 def main():
     '''
     Run all the functions of the program.
@@ -209,6 +238,7 @@ def main():
         height_in_cm = convert_height(height_in_inch)
 
     gender_data = select_gender()
+    age = collect_age()
 
 
 main()
