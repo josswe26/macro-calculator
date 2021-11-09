@@ -152,7 +152,7 @@ def convert_height(height_in_inch):
 
 def select_gender():
     '''
-    Allow the user to selct their gender
+    Allow the user to select their gender
     and return a dictionary including the gender and
     the value assigned to it to be used in the program
     '''
@@ -181,7 +181,7 @@ def select_gender():
 
         else:
             print('\nInvalid selection. You need to enter 1 or 2 '
-                  'to select the desired unit.')
+                  'to select your gender.')
             continue
 
 
@@ -214,6 +214,77 @@ def collect_age():
             continue
 
 
+def select_activity_level():
+    '''
+    Allow the user to select their activity level
+    and return a dictionary including the chosen
+    activity level and the value assigned to it
+    '''
+    while True:
+        selection = input('\nSelect your activity level. '
+                          'Please enter the value assigned to each level:\n'
+                          '\n1. No activity (sedentary).'
+                          '\n2. A little activity '
+                          '(1 to 3 hours of exercise or sports per week)'
+                          '\n3. Some activity '
+                          '(4 to 6 hours of exercise or sports per week)'
+                          '\n4. A lot of activity '
+                          '(7 to 9 hours of exercise or sports per week)'
+                          '\n5. A TON of activity '
+                          '(10+ hours of exercise or sports per week)\n')
+
+        if selection == '1':
+            print('\nYou selected: No activity.')
+            activity_data = {
+                'activity level': 'no activity',
+                'value': 1.2
+            }
+
+            return activity_data
+
+        elif selection == '2':
+            print('\nYou selected: A little activity')
+            activity_data = {
+                'activity level': 'a little activity',
+                'value': 1.375
+            }
+
+            return activity_data
+
+        elif selection == '3':
+            print('\nYou selected: Some activity')
+            activity_data = {
+                'activity level': 'some activity',
+                'value': 1.55
+            }
+
+            return activity_data
+
+        elif selection == '4':
+            print('\nYou selected: A lot of activity')
+            activity_data = {
+                'activity level': 'a lot of activity',
+                'value': 1.725
+            }
+
+            return activity_data
+
+        elif selection == '5':
+            print('\nYou selected: A TON of activity')
+            activity_data = {
+                'activity level': 'a TON of activity',
+                'value': 1.9
+            }
+
+            return activity_data
+
+        else:
+            print('\nInvalid selection. '
+                  'You need to enter a number between 1 and 5 '
+                  'to select your activitu level.')
+            continue
+
+
 def main():
     '''
     Run all the functions of the program.
@@ -239,6 +310,7 @@ def main():
 
     gender_data = select_gender()
     age = collect_age()
+    activity_data = select_activity_level()
 
 
 main()
