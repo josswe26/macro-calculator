@@ -34,8 +34,7 @@ def welcome_message():
 
 def collect_name():
     '''
-    Collect the user's name to be able
-    to access it later in the program
+    Collect the user's name and return the value
     '''
     name = input('\nTo proceed, please enter your name: \n')
     print(f'\nThank you, {name.capitalize()}!')
@@ -106,8 +105,8 @@ def validate_height(height, unit):
 
 def collect_weight(unit):
     '''
-    Collect the user's weight in the selected unit
-    to access it later in the program.
+    Collect the user's weight in the selected
+    unit and return the value
     '''
     while True:
         weight = input(f'\nEnter your weight in {unit}:\n')
@@ -153,8 +152,7 @@ def convert_height(height_in_inch):
 def select_gender():
     '''
     Allow the user to select their gender
-    and return a dictionary including the gender and
-    the value assigned to it to be used in the program
+    and return a dictionary including the gender data
     '''
     while True:
         gender_selection = input('\nPlease select your gender\n'
@@ -202,8 +200,7 @@ def validate_age(age):
 
 def collect_age():
     '''
-    Collect the user's age to
-    access it later in the program.
+    Collect the user's age and return the value
     '''
     while True:
         age = input(f'\nPlease provide your age:\n')
@@ -216,9 +213,8 @@ def collect_age():
 
 def select_activity_level():
     '''
-    Allow the user to select their activity level
-    and return a dictionary including the chosen
-    activity level and the value assigned to it
+    Allow the user to select their activity level and
+    return a dictionary including the activity level data
     '''
     while True:
         level_selection = input('\nSelect your activity level. '
@@ -289,8 +285,7 @@ def select_activity_level():
 def select_goal():
     '''
     Allow the user to select their goal and return
-    a dictionary including the chosen goal, the
-    selected rate and the value assigned to it
+    a dictionary including the goal data
     '''
     while True:
         goal_selection = input('\nChoose your goal. '
@@ -448,7 +443,7 @@ def select_diet():
         diet_selection = input('\nTo be able to calculate your daily macros, '
                                'choose your prefered diet. '
                                'Please enter the value '
-                               'assigned to the disired diet:\n'
+                               'assigned to the desired diet:\n'
                                '\n1. Balanced.'
                                '\n2. Low-carb.'
                                '\n3. High-carb.'
@@ -496,14 +491,61 @@ def select_diet():
 
             return macro_data
 
-        # elif diet_selection == '6':
+        elif diet_selection == '6':
+            while True:
+                protein = collect_macro('protein')
+                carbs = collect_macro('carbs')
+                fat = collect_macro('fat')
 
-        #   return macro_data
+                if protein + carbs + fat == 100:
+
+                    macro_data = {
+                        'protein': protein / 100,
+                        'carbs': carbs / 100,
+                        'fat': fat / 100
+                        }
+
+                    return macro_data
+
+                else:
+                    print('\nInvalid input. The total value must be '
+                          'exactly 100, please try again.')
+                    continue
 
         else:
             print('\nInvalid selection. '
                   'You need to enter a number between 1 and 6 '
                   'to choose the desired diet.')
+            continue
+
+
+def validate_macro(macro_percentage):
+    '''
+    Validate the provided macro percentage value.
+    '''
+    try:
+        percentage = int(macro_percentage)
+        if percentage < 1 or percentage > 100:
+            raise ValueError('The percentage value must be between 1 and 100.')
+    except ValueError as e:
+        print(f'\nInvalid percentage. {e} '
+              'Please provide your percentage again.')
+        return False
+
+    return True
+
+
+def collect_macro(macro_type):
+    '''
+    Allow the user to input a custom macro
+    percentage and return the value
+    '''
+    while True:
+        macro = input(f'\nPlease enter the desired {macro_type} percentage:\n')
+
+        if validate_macro(macro):
+            return int(macro)
+        else:
             continue
 
 
