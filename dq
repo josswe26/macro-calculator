@@ -1,0 +1,77 @@
+[33mcommit b3f2d5af31951ac2d0d9db95390c1e15f555a4cd[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Tue Nov 9 21:13:20 2021 +0000
+
+    Add functions to collect and validate the user's age
+
+[33mcommit d2350f9da3e30794e731f629dad604020bcae633[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Tue Nov 9 20:57:14 2021 +0000
+
+    Add function to select gender
+
+[33mcommit c7d428310f11ea3e068970a9da746279891fbded[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Mon Nov 8 23:26:37 2021 +0000
+
+    Fix functions returning None when invalid data entered the first time
+
+[33mcommit 95c93ba1d0adc23de672484dc9e940e2e39e15a6[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Mon Nov 8 23:18:10 2021 +0000
+
+    Add function to convert height from inch to cm
+
+[33mcommit e93ea65b3d6c2409f77accbaaa41e4962ee94b26[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Mon Nov 8 22:35:18 2021 +0000
+
+    Add function to convert weight from lbs to kg
+
+[33mcommit 46779de7ada1439336e22688bf9e00b1e70a08ad[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Mon Nov 8 22:20:49 2021 +0000
+
+    Add functions to collect and validate user's height
+
+[33mcommit fdfb8688269ab5ebd3fdf57d9b2339f260b9bbd1[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Mon Nov 8 21:24:46 2021 +0000
+
+    Modify collect_weight function to be able to handle different units
+
+[33mcommit a6999e51bd93c55d6846e667b8c6f5ea147aa029[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Mon Nov 8 20:58:21 2021 +0000
+
+    Add functions to validate weight and to collect weight in kg
+
+[33mcommit de0b74dc7de83b4b1f6aa36728de5aa7717199b0[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Mon Nov 8 20:29:10 2021 +0000
+
+    Add function to handle the unit selection and add display message to the collect_name function
+
+[33mcommit 266051f7cd9160f175d5cdc0270c99552e877d8d[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Sun Nov 7 21:17:55 2021 +0000
+
+    Add funtion to collect user's name
+
+[33mcommit bd5b5924c07d8f64d96a98c806c68442bdff6c86[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Sun Nov 7 21:09:01 2021 +0000
+
+    Add functions to diplay welcome message and run all other functions of the program
+
+[33mcommit 160d55221e2b73d701d421b110de2a40a3876671[m
+Author: josswe26 <josec.sanchez@icloud.com>
+Date:   Sun Nov 7 20:02:26 2021 +0000
+
+    Add project overview and table of content to README.md
+
+[33mcommit 5737361e95627f6981a413be411c7d8ee32bd4a5[m
+Author: josswe26 <84602766+josswe26@users.noreply.github.com>
+Date:   Fri Nov 5 01:08:48 2021 +0100
+
+    Initial commit

@@ -157,11 +157,11 @@ def select_gender():
     the value assigned to it to be used in the program
     '''
     while True:
-        selection = input('\nPlease select your gender\n'
-                          '\nFor female, please enter 1.\n'
-                          'For male, please enter 2.\n')
+        gender_selection = input('\nPlease select your gender\n'
+                                 '\nFor female, please enter 1.\n'
+                                 'For male, please enter 2.\n')
 
-        if selection == '1':
+        if gender_selection == '1':
             print('\nFemale has been selected.')
             gender_data = {
                 'gender': 'female',
@@ -170,7 +170,7 @@ def select_gender():
 
             return gender_data
 
-        elif selection == '2':
+        elif gender_selection == '2':
             print('\nMale has been selected')
             gender_data = {
                 'gender': 'male',
@@ -221,19 +221,20 @@ def select_activity_level():
     activity level and the value assigned to it
     '''
     while True:
-        selection = input('\nSelect your activity level. '
-                          'Please enter the value assigned to each level:\n'
-                          '\n1. No activity (sedentary).'
-                          '\n2. A little activity '
-                          '(1 to 3 hours of exercise or sports per week)'
-                          '\n3. Some activity '
-                          '(4 to 6 hours of exercise or sports per week)'
-                          '\n4. A lot of activity '
-                          '(7 to 9 hours of exercise or sports per week)'
-                          '\n5. A TON of activity '
-                          '(10+ hours of exercise or sports per week)\n')
+        level_selection = input('\nSelect your activity level. '
+                                'Please enter the value '
+                                'assigned to each level:\n'
+                                '\n1. No activity (sedentary).'
+                                '\n2. A little activity '
+                                '(1 to 3 hours of exercise or sports per week)'
+                                '\n3. Some activity '
+                                '(4 to 6 hours of exercise or sports per week)'
+                                '\n4. A lot of activity '
+                                '(7 to 9 hours of exercise or sports per week)'
+                                '\n5. A TON of activity '
+                                '(10+ hours of exercise or sports per week)\n')
 
-        if selection == '1':
+        if level_selection == '1':
             print('\nYou selected: No activity.')
             activity_data = {
                 'activity level': 'no activity',
@@ -242,7 +243,7 @@ def select_activity_level():
 
             return activity_data
 
-        elif selection == '2':
+        elif level_selection == '2':
             print('\nYou selected: A little activity')
             activity_data = {
                 'activity level': 'a little activity',
@@ -251,7 +252,7 @@ def select_activity_level():
 
             return activity_data
 
-        elif selection == '3':
+        elif level_selection == '3':
             print('\nYou selected: Some activity')
             activity_data = {
                 'activity level': 'some activity',
@@ -260,7 +261,7 @@ def select_activity_level():
 
             return activity_data
 
-        elif selection == '4':
+        elif level_selection == '4':
             print('\nYou selected: A lot of activity')
             activity_data = {
                 'activity level': 'a lot of activity',
@@ -269,7 +270,7 @@ def select_activity_level():
 
             return activity_data
 
-        elif selection == '5':
+        elif level_selection == '5':
             print('\nYou selected: A TON of activity')
             activity_data = {
                 'activity level': 'a TON of activity',
@@ -281,7 +282,135 @@ def select_activity_level():
         else:
             print('\nInvalid selection. '
                   'You need to enter a number between 1 and 5 '
-                  'to select your activitu level.')
+                  'to select your activity level.')
+            continue
+
+
+def select_goal():
+    '''
+    Allow the user to select their goal and return
+    a dictionary including the chosen goal, the
+    selected rate and the value assigned to it
+    '''
+    while True:
+        goal_selection = input('\nChoose your goal. '
+                               'Please enter the value '
+                               'assigned to each goal:\n'
+                               '\n1. Lose weight.'
+                               '\n2. Maintain weight'
+                               '\n3. Gain weight\n')
+
+        if goal_selection == '1':
+            while True:
+                rate_selection = input('\nHow would you like to lose weight? '
+                                       'Please enter the value '
+                                       'assigned to each rate:\n'
+                                       '\n1. Slow (0.5 lb per week).'
+                                       '\n2. Moderate (1 lb per week).'
+                                       '\n3. Fast (2 lb per week)\n')
+
+                if rate_selection == '1':
+                    print('\nYou would like to lose weight at a slow rate.')
+
+                    goal_data = {
+                        'goal': 'lose weight',
+                        'rate': 'slow',
+                        'value': 0.91
+                    }
+
+                    return goal_data
+
+                elif rate_selection == '2':
+                    print('\nYou would like to lose '
+                          'weight at a moderate rate.')
+
+                    goal_data = {
+                        'goal': 'lose weight',
+                        'rate': 'moderate',
+                        'value': 0.82
+                    }
+
+                    return goal_data
+
+                elif rate_selection == '3':
+                    print('\nYou would like to lose weight at a fast rate.')
+
+                    goal_data = {
+                        'goal': 'lose weight',
+                        'rate': 'fast',
+                        'value': 0.65
+                    }
+
+                    return goal_data
+
+                else:
+                    print('\nInvalid selection. '
+                          'You need to enter a number between 1 and 3 '
+                          'to select the desired rate.')
+                    continue
+
+        elif goal_selection == '2':
+            print('\nYou would like to maintain your weight.')
+            goal_data = {
+                'goal': 'maintain weight',
+                'value': 1
+            }
+
+            return goal_data
+
+        elif goal_selection == '3':
+            while True:
+                rate_selection = input('\nHow would you like to gain weight? '
+                                       'Please enter the value '
+                                       'assigned to each rate:\n'
+                                       '\n1. Slow (0.5 lb per week).'
+                                       '\n2. Moderate (1 lb per week).'
+                                       '\n3. Fast (2 lb per week)\n')
+
+                if rate_selection == '1':
+                    print('\nYou would like to gain weight at a slow rate.')
+
+                    goal_data = {
+                        'goal': 'gain weight',
+                        'rate': 'slow',
+                        'value': 1.08
+                    }
+
+                    return goal_data
+
+                elif rate_selection == '2':
+                    print('\nYou would like to gain '
+                          'weight at a moderate rate.')
+
+                    goal_data = {
+                        'goal': 'gain weight',
+                        'rate': 'moderate',
+                        'value': 1.17
+                    }
+
+                    return goal_data
+
+                elif rate_selection == '3':
+                    print('\nYou would like to gain weight at a fast rate.')
+
+                    goal_data = {
+                        'goal': 'gain weight',
+                        'rate': 'fast',
+                        'value': 1.34
+                    }
+
+                    return goal_data
+
+                else:
+                    print('\nInvalid selection. '
+                          'You need to enter a number between 1 and 3 '
+                          'to select the desired rate.')
+                    continue
+
+        else:
+            print('\nInvalid selection. '
+                  'You need to enter a number between 1 and 3 '
+                  'to select the desired goal.')
             continue
 
 
@@ -302,7 +431,7 @@ def main():
         weight_in_kg = collect_weight('kg')
         height_in_cm = collect_height('cm')
     elif unit == 2:
-        weight_in_lbs = collect_weight('pounds')
+        weight_in_lbs = collect_weight('lb')
         height_in_inch = collect_height('inch')
 
         weight_in_kg = convert_weight(weight_in_lbs)
@@ -311,6 +440,8 @@ def main():
     gender_data = select_gender()
     age = collect_age()
     activity_data = select_activity_level()
+    goal_data = select_goal()
 
+    print(goal_data)
 
 main()
