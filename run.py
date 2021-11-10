@@ -416,14 +416,27 @@ def select_goal():
 
 def calculate_bmr(weight, height, age, gender_value):
     '''
-    Calculate the user's basal metabolic rate (BMR)
-    using the data provided by the user
+    Calculate the user's basal metabolic rate (BMR) using
+    the data provided by the user and return the result
     '''
     bmr = (9.99 * weight) + (6.25 * height) - (4.92 + age) + gender_value
 
     print(f'\nYour basal metabolic rate (BMR) is {bmr} calories.')
 
     return bmr
+
+
+def calculate_tdee(bmr, activity_level, activity_value):
+    '''
+    Calculate the user's total daily energy expenditure (TDEE)
+    using the BMR data and the activity level
+    '''
+    tdee = bmr * activity_value
+
+    print(f'\nBy practicing {activity_level}, '
+          f'your total daily energy expenditure (TDEE) will be {tdee}')
+
+    return tdee
 
 
 def main():
@@ -454,6 +467,9 @@ def main():
     activity_data = select_activity_level()
     goal_data = select_goal()
     bmr = calculate_bmr(weight_in_kg, height_in_cm, age, gender_data['value'])
+    tdee = calculate_tdee(bmr,
+                          activity_data['activity level'],
+                          activity_data['value'])
 
 
 main()
