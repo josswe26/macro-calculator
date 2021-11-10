@@ -429,7 +429,7 @@ def calculate_bmr(weight, height, age, gender_value):
 def calculate_tdee(bmr, activity_level, activity_value):
     '''
     Calculate the user's total daily energy expenditure (TDEE)
-    using the BMR data and the activity level
+    using the BMR data and the activity level and return the result
     '''
     tdee = bmr * activity_value
 
@@ -437,6 +437,74 @@ def calculate_tdee(bmr, activity_level, activity_value):
           f'your total daily energy expenditure (TDEE) will be {tdee}')
 
     return tdee
+
+
+def select_diet():
+    '''
+    Allow the user to select their prefered diet
+    and return the macronutrient split data
+    '''
+    while True:
+        diet_selection = input('\nTo be able to calculate your daily macros, '
+                               'choose your prefered diet. '
+                               'Please enter the value '
+                               'assigned to the disired diet:\n'
+                               '\n1. Balanced.'
+                               '\n2. Low-carb.'
+                               '\n3. High-carb.'
+                               '\n4. High-protein.'
+                               '\n5. Ketogenic.'
+                               '\n6. Custom (Advanced users only).\n')
+
+        if diet_selection == '1':
+
+            print('You chose to follow a balanced diet.')
+
+            macro_data = {'protein': 0.4, 'carbs': 0.3, 'fat': 0.3}
+
+            return macro_data
+
+        elif diet_selection == '2':
+
+            print('You chose to follow a low-carb diet.')
+
+            macro_data = {'protein': 0.4, 'carbs': 0.2, 'fat': 0.4}
+
+            return macro_data
+
+        elif diet_selection == '3':
+
+            print('You chose to follow a high-carb diet.')
+
+            macro_data = {'protein': 0.3, 'carbs': 0.5, 'fat': 0.2}
+
+            return macro_data
+
+        elif diet_selection == '4':
+
+            print('You chose to follow a high-protein diet.')
+
+            macro_data = {'protein': 0.5, 'carbs': 0.25, 'fat': 0.25}
+
+            return macro_data
+
+        elif diet_selection == '5':
+
+            print('You chose to follow a ketogenid diet.')
+
+            macro_data = {'protein': 0.4, 'carbs': 0.1, 'fat': 0.5}
+
+            return macro_data
+
+        # elif diet_selection == '6':
+
+        #   return macro_data
+
+        else:
+            print('\nInvalid selection. '
+                  'You need to enter a number between 1 and 6 '
+                  'to choose the desired diet.')
+            continue
 
 
 def main():
@@ -470,6 +538,7 @@ def main():
     tdee = calculate_tdee(bmr,
                           activity_data['activity level'],
                           activity_data['value'])
+    macro_data = select_diet()
 
 
 main()
