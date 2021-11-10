@@ -414,6 +414,18 @@ def select_goal():
             continue
 
 
+def calculate_bmr(weight, height, age, gender_value):
+    '''
+    Calculate the user's basal metabolic rate (BMR)
+    using the data provided by the user
+    '''
+    bmr = (9.99 * weight) + (6.25 * height) - (4.92 + age) + gender_value
+
+    print(f'\nYour basal metabolic rate (BMR) is {bmr} calories.')
+
+    return bmr
+
+
 def main():
     '''
     Run all the functions of the program.
@@ -441,7 +453,7 @@ def main():
     age = collect_age()
     activity_data = select_activity_level()
     goal_data = select_goal()
+    bmr = calculate_bmr(weight_in_kg, height_in_cm, age, gender_data['value'])
 
-    print(goal_data)
 
 main()
