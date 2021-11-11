@@ -434,6 +434,23 @@ def calculate_tdee(bmr, activity_level, activity_value):
     return tdee
 
 
+def validate_percentage(*args):
+    '''
+    Validate the total percentage value.
+    '''
+    try:
+        percentage = 0
+        for num in args:
+            percentage += num
+        if percentage != 100:
+            raise ValueError('The total percentage value must be exactly 100.')
+    except ValueError as e:
+        print(f'\nInvalid input. {e} Please try again.')
+        return False
+
+    return True
+
+
 def select_diet():
     '''
     Allow the user to select their prefered diet
@@ -497,7 +514,7 @@ def select_diet():
                 carbs = collect_macro('carbs')
                 fat = collect_macro('fat')
 
-                if protein + carbs + fat == 100:
+                if validate_percentage(protein, carbs, fat):
 
                     macro_data = {
                         'protein': protein / 100,
@@ -508,8 +525,6 @@ def select_diet():
                     return macro_data
 
                 else:
-                    print('\nInvalid input. The total value must be '
-                          'exactly 100, please try again.')
                     continue
 
         else:
