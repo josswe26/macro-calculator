@@ -577,6 +577,22 @@ def select_diet():
             continue
 
 
+def calculate_macro(macro, goal_calories, percentage):
+    '''
+    Calculates the macronutrient
+    daily grams to be consumed daily
+    depending on the user's goal
+    '''
+    grams_per_day = goal_calories * percentage
+
+    if macro == 'protein' or macro == 'carbs':
+        grams_per_day /= 4
+    elif macro == 'fat':
+        grams_per_day /= 9
+
+    return int(round(grams_per_day))
+
+
 def main():
     '''
     Run all the functions of the program.
@@ -616,6 +632,12 @@ def main():
     goal_calories = calculate_goal_calories(tdee, goal_data['value'])
     
     macro_data = select_diet()
+
+    protein_grams = calculate_macro('protein', goal_calories, macro_data['protein'])
+    carbs_grams = calculate_macro('carbs', goal_calories, macro_data['carbs'])
+    fat_grams = calculate_macro('fat', goal_calories, macro_data['fat'])
+
+    print(f'\nprotein: {protein_grams}g, carbs: {carbs_grams}g, fat: {fat_grams}g')
 
 
 main()
