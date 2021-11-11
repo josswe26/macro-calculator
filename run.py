@@ -434,6 +434,49 @@ def calculate_tdee(bmr, activity_level, activity_value):
     return tdee
 
 
+def calculate_goal_calories(tdee, goal_value):
+    '''
+    Calculate the total calories per day
+    depending on the selected goal
+    '''
+    goal_calories = tdee * goal_value
+
+    print(f'\nYou will need to consume {goal_calories} '
+          'per day to reach your goal.')
+
+    return goal_calories
+
+
+def validate_macro(macro_percentage):
+    '''
+    Validate the provided macro percentage value.
+    '''
+    try:
+        percentage = int(macro_percentage)
+        if percentage < 1 or percentage > 100:
+            raise ValueError('The percentage value must be between 1 and 100.')
+    except ValueError as e:
+        print(f'\nInvalid percentage. {e} '
+              'Please provide your percentage again.')
+        return False
+
+    return True
+
+
+def collect_macro(macro_type):
+    '''
+    Allow the user to input a custom macro
+    percentage and return the value
+    '''
+    while True:
+        macro = input(f'\nPlease enter the desired {macro_type} percentage:\n')
+
+        if validate_macro(macro):
+            return int(macro)
+        else:
+            continue
+
+
 def validate_percentage(*args):
     '''
     Validate the total percentage value.
@@ -534,36 +577,6 @@ def select_diet():
             continue
 
 
-def validate_macro(macro_percentage):
-    '''
-    Validate the provided macro percentage value.
-    '''
-    try:
-        percentage = int(macro_percentage)
-        if percentage < 1 or percentage > 100:
-            raise ValueError('The percentage value must be between 1 and 100.')
-    except ValueError as e:
-        print(f'\nInvalid percentage. {e} '
-              'Please provide your percentage again.')
-        return False
-
-    return True
-
-
-def collect_macro(macro_type):
-    '''
-    Allow the user to input a custom macro
-    percentage and return the value
-    '''
-    while True:
-        macro = input(f'\nPlease enter the desired {macro_type} percentage:\n')
-
-        if validate_macro(macro):
-            return int(macro)
-        else:
-            continue
-
-
 def main():
     '''
     Run all the functions of the program.
@@ -589,12 +602,19 @@ def main():
 
     gender_data = select_gender()
     age = collect_age()
-    activity_data = select_activity_level()
-    goal_data = select_goal()
+
     bmr = calculate_bmr(weight_in_kg, height_in_cm, age, gender_data['value'])
+
+    activity_data = select_activity_level()
+    
     tdee = calculate_tdee(bmr,
                           activity_data['activity level'],
                           activity_data['value'])
+
+    goal_data = select_goal()
+    
+    goal_calories = calculate_goal_calories(tdee, goal_data['value'])
+    
     macro_data = select_diet()
 
 
