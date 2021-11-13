@@ -1,4 +1,5 @@
 from prettytable import PrettyTable, ALL
+import textwrap
 
 
 def welcome_message():
@@ -31,8 +32,9 @@ def welcome_message():
    #####  #    # ######  ####   ####  ###### #    #   #    ####  #    #
     ''')
 
-    print('\nUse this calculator to help you discover how much of each '
-          'macronutrient you should eat every day to reach your goals.')
+    print('\n' + textwrap.fill('Use this calculator to help you discover '
+                               'how much of each macronutrient you should eat '
+                               'every day to reach your goals.', 80))
 
 
 def collect_name():
@@ -418,22 +420,21 @@ def calculate_bmr(weight, height, age, gender_value):
     Calculate the user's basal metabolic rate (BMR) using
     the data provided by the user and return the result
     '''
-    bmr = (9.99 * weight) + (6.25 * height) - (4.92 + age) + gender_value
+    print(f'\nCalculating your basal metabolic rate (BMR)...')
 
-    print(f'\nYour basal metabolic rate (BMR) is {bmr} calories.')
+    bmr = (9.99 * weight) + (6.25 * height) - (4.92 + age) + gender_value
 
     return bmr
 
 
-def calculate_tdee(bmr, activity_level, activity_value):
+def calculate_tdee(bmr, activity_value):
     '''
     Calculate the user's total daily energy expenditure (TDEE)
     using the BMR data and the activity level and return the result
     '''
-    tdee = bmr * activity_value
+    print(f'\nCalculating your total daily energy expenditure (TDEE)...')
 
-    print(f'\nBy practicing {activity_level}, '
-          f'your total daily energy expenditure (TDEE) will be {tdee}')
+    tdee = bmr * activity_value
 
     return tdee
 
@@ -443,10 +444,9 @@ def calculate_goal_calories(tdee, goal_value):
     Calculate the total calories per day
     depending on the selected goal
     '''
-    goal_calories = tdee * goal_value
+    print(f'\nCalculating your total calories...')
 
-    print(f'\nYou will need to consume {goal_calories} '
-          'per day to reach your goal.')
+    goal_calories = tdee * goal_value
 
     return goal_calories
 
@@ -506,7 +506,7 @@ def select_diet():
     while True:
         diet_selection = input('\nTo be able to calculate your daily macros, '
                                'choose your prefered diet. '
-                               'Please enter the value '
+                               '\nPlease enter the value '
                                'assigned to the desired diet:\n'
                                '\n1. Balanced.'
                                '\n2. Low-carb.'
@@ -634,11 +634,66 @@ def data_review(name, age, gender, weight, height,
     print(table)
 
     data_correct = input('\nIs the data provided correct?'
-                         "\nPress 'Y' to continue."
-                         "\nPress 'N' to enter the data again.\n").lower()
+                         "\nTo continue, please enter 'y'."
+                         "\nTo enter the data again, "
+                         "please enter 'n'.\n").lower()
 
     if data_correct == 'n':
         main()
+
+
+def display_data(name, bmr, tdee, activity_level,
+                 goal_data, goal_calories, macro_data,
+                 protein_grams, carbs_grams, fat_grams):
+    '''
+    Format and display the data
+    '''
+    print(f'\nGreat, {name.capitalize()}! Here are your results:')
+
+    print(f'\nYour BMR is: {round(bmr)} calories.')
+    print('\n' + textwrap.fill('BMR or basal metabolic rate, is the '
+                               'average amount of calories your body '
+                               'requires every day to fuel essential '
+                               'functions like breathing, pumping blood, '
+                               'producing hormones, and so forth (basically, '
+                               ' it’s how many calories you’d burn resting '
+                               'for 24 hours).', 70))
+
+    print(f'\nPracticing {activity_level} per week, your TDEE will be: '
+          f'{round(tdee)} calories.')
+    print('\n' + textwrap.fill('TDEE or total daily energy expended is '
+                               'the average amount of calories you '
+                               'burn per day.', 70))
+
+    print(f'\nTo reach your goal of {goal_data["goal"]}', end='')
+
+    if goal_data['rate']:
+        print(f' at a {goal_data["rate"]} rate,')
+    else:
+        print(',')
+
+    print(f'you will need to consume {round(goal_calories)} calories per day.')
+
+    print(f'\nFinally, following a {macro_data["diet"]} diet, '
+          'you will need to consume the following macronutrients:\n')
+
+    table = PrettyTable()
+
+    table.field_names = ['Macro', 'Percentage', 'Grams per day']
+
+    table.add_row(['Protein',
+                   f'{int(macro_data["protein"] * 100)}%',
+                   f'{protein_grams}g'])
+
+    table.add_row(['Carbs',
+                   f'{int(macro_data["carbs"] * 100)}%',
+                   f'{carbs_grams}g'])
+
+    table.add_row(['Fat',
+                   f'{int(macro_data["fat"] * 100)}%',
+                   f'{fat_grams}g'])
+
+    print(table)
 
 
 def main():
@@ -667,29 +722,11 @@ def main():
         weight_in_kg = convert_weight(weight_in_lb)
         height_in_cm = convert_height(height_in_inch)
 
-    bmr = calculate_bmr(weight_in_kg, height_in_cm, age, gender_data['value'])
-
     activity_data = select_activity_level()
-
-    tdee = calculate_tdee(bmr,
-                          activity_data['activity level'],
-                          activity_data['value'])
 
     goal_data = select_goal()
 
-    goal_calories = calculate_goal_calories(tdee, goal_data['value'])
-
     macro_data = select_diet()
-
-    protein_grams = calculate_macro('protein',
-                                    goal_calories,
-                                    macro_data['protein'])
-    carbs_grams = calculate_macro('carbs',
-                                  goal_calories,
-                                  macro_data['carbs'])
-    fat_grams = calculate_macro('fat',
-                                goal_calories,
-                                macro_data['fat'])
 
     if unit == 1:
         data_review(name, age,
@@ -703,6 +740,26 @@ def main():
                     weight_in_lb, height_in_inch, 'lb', 'inch',
                     activity_data['activity level'],
                     goal_data, macro_data['diet'])
+
+    bmr = calculate_bmr(weight_in_kg, height_in_cm, age, gender_data['value'])
+
+    tdee = calculate_tdee(bmr, activity_data['value'])
+
+    goal_calories = calculate_goal_calories(tdee, goal_data['value'])
+
+    protein_grams = calculate_macro('protein',
+                                    goal_calories,
+                                    macro_data['protein'])
+    carbs_grams = calculate_macro('carbs',
+                                  goal_calories,
+                                  macro_data['carbs'])
+    fat_grams = calculate_macro('fat',
+                                goal_calories,
+                                macro_data['fat'])
+
+    display_data(name, bmr, tdee, activity_data['activity level'],
+                 goal_data, goal_calories, macro_data,
+                 protein_grams, carbs_grams, fat_grams)
 
 
 welcome_message()
