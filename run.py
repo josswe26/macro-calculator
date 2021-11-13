@@ -1,3 +1,6 @@
+from prettytable import PrettyTable, ALL
+
+
 def welcome_message():
     '''
     Display the welcome message.
@@ -348,6 +351,7 @@ def select_goal():
             print('\nYou would like to maintain your weight.')
             goal_data = {
                 'goal': 'maintain weight',
+                'rate': None,
                 'value': 1
             }
 
@@ -513,41 +517,46 @@ def select_diet():
 
         if diet_selection == '1':
 
-            print('You chose to follow a balanced diet.')
+            print('\nYou chose to follow a balanced diet.')
 
-            macro_data = {'protein': 0.4, 'carbs': 0.3, 'fat': 0.3}
+            macro_data = {'diet': 'balanced', 'protein': 0.4,
+                          'carbs': 0.3, 'fat': 0.3}
 
             return macro_data
 
         elif diet_selection == '2':
 
-            print('You chose to follow a low-carb diet.')
+            print('\nYou chose to follow a low-carb diet.')
 
-            macro_data = {'protein': 0.4, 'carbs': 0.2, 'fat': 0.4}
+            macro_data = {'diet': 'low-carb', 'protein': 0.4,
+                          'carbs': 0.2, 'fat': 0.4}
 
             return macro_data
 
         elif diet_selection == '3':
 
-            print('You chose to follow a high-carb diet.')
+            print('\nYou chose to follow a high-carb diet.')
 
-            macro_data = {'protein': 0.3, 'carbs': 0.5, 'fat': 0.2}
+            macro_data = {'diet': 'high-carb', 'protein': 0.3,
+                          'carbs': 0.5, 'fat': 0.2}
 
             return macro_data
 
         elif diet_selection == '4':
 
-            print('You chose to follow a high-protein diet.')
+            print('\nYou chose to follow a high-protein diet.')
 
-            macro_data = {'protein': 0.5, 'carbs': 0.25, 'fat': 0.25}
+            macro_data = {'diet': 'high-protein', 'protein': 0.5,
+                          'carbs': 0.25, 'fat': 0.25}
 
             return macro_data
 
         elif diet_selection == '5':
 
-            print('You chose to follow a ketogenid diet.')
+            print('\nYou chose to follow a ketogenic diet.')
 
-            macro_data = {'protein': 0.4, 'carbs': 0.1, 'fat': 0.5}
+            macro_data = {'diet': 'ketogenic', 'protein': 0.4,
+                          'carbs': 0.1, 'fat': 0.5}
 
             return macro_data
 
@@ -560,9 +569,8 @@ def select_diet():
                 if validate_percentage(protein, carbs, fat):
 
                     macro_data = {
-                        'protein': protein / 100,
-                        'carbs': carbs / 100,
-                        'fat': fat / 100
+                        'diet': 'custom', 'protein': protein / 100,
+                        'carbs': carbs / 100, 'fat': fat / 100
                         }
 
                     return macro_data
@@ -593,12 +601,55 @@ def calculate_macro(macro, goal_calories, percentage):
     return int(round(grams_per_day))
 
 
+def data_review(name, age, gender, weight, height,
+                weight_unit, height_unit, activity_level,
+                goal_data, diet):
+    '''
+    Display the data input by the user for review
+    and allow the user to enter the data again if
+    a mistake has been made
+    '''
+    print(f'\nThank you for you input, {name.capitalize()}.'
+          '\nPlease review the data you provided:\n')
+
+    table = PrettyTable(header=False, hrules=ALL)
+
+    table.add_row(['Name', name.capitalize()])
+    table.add_row(['Age', f'{age} years old'])
+    table.add_row(['Gender', gender.capitalize()])
+
+    table.add_row(['Weight', f'{weight} {weight_unit}'])
+    table.add_row(['Height', f'{height} {height_unit}'])
+
+    table.add_row(['Activity Level', activity_level.capitalize()])
+
+    if goal_data["rate"]:
+        table.add_row(['Goal', f'{goal_data["goal"].capitalize()}'
+                       f'\nat a {goal_data["rate"]} rate.'])
+    else:
+        table.add_row(['Goal', f'{goal_data["goal"].capitalize()}'])
+
+    table.add_row(['Diet', diet.capitalize()])
+
+    print(table)
+
+    data_correct = input('\nIs the data provided correct?'
+                         "\nPress 'Y' to continue."
+                         "\nPress 'N' to enter the data again.\n").lower()
+
+    if data_correct == 'n':
+        main()
+
+
 def main():
     '''
     Run all the functions of the program.
     '''
-    welcome_message()
     name = collect_name()
+
+    age = collect_age()
+    gender_data = select_gender()
+
     unit = select_unit()
 
     weight_in_kg = None
@@ -610,34 +661,49 @@ def main():
         weight_in_kg = collect_weight('kg')
         height_in_cm = collect_height('cm')
     elif unit == 2:
-        weight_in_lbs = collect_weight('lb')
+        weight_in_lb = collect_weight('lb')
         height_in_inch = collect_height('inch')
 
-        weight_in_kg = convert_weight(weight_in_lbs)
+        weight_in_kg = convert_weight(weight_in_lb)
         height_in_cm = convert_height(height_in_inch)
-
-    gender_data = select_gender()
-    age = collect_age()
 
     bmr = calculate_bmr(weight_in_kg, height_in_cm, age, gender_data['value'])
 
     activity_data = select_activity_level()
-    
+
     tdee = calculate_tdee(bmr,
                           activity_data['activity level'],
                           activity_data['value'])
 
     goal_data = select_goal()
-    
+
     goal_calories = calculate_goal_calories(tdee, goal_data['value'])
-    
+
     macro_data = select_diet()
 
-    protein_grams = calculate_macro('protein', goal_calories, macro_data['protein'])
-    carbs_grams = calculate_macro('carbs', goal_calories, macro_data['carbs'])
-    fat_grams = calculate_macro('fat', goal_calories, macro_data['fat'])
+    protein_grams = calculate_macro('protein',
+                                    goal_calories,
+                                    macro_data['protein'])
+    carbs_grams = calculate_macro('carbs',
+                                  goal_calories,
+                                  macro_data['carbs'])
+    fat_grams = calculate_macro('fat',
+                                goal_calories,
+                                macro_data['fat'])
 
-    print(f'\nprotein: {protein_grams}g, carbs: {carbs_grams}g, fat: {fat_grams}g')
+    if unit == 1:
+        data_review(name, age,
+                    gender_data['gender'],
+                    weight_in_kg, height_in_cm, 'kg', 'cm',
+                    activity_data['activity level'],
+                    goal_data, macro_data['diet'])
+    if unit == 2:
+        data_review(name, age,
+                    gender_data['gender'],
+                    weight_in_lb, height_in_inch, 'lb', 'inch',
+                    activity_data['activity level'],
+                    goal_data, macro_data['diet'])
 
 
+welcome_message()
 main()
