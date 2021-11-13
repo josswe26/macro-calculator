@@ -639,7 +639,9 @@ def data_review(name, age, gender, weight, height,
                          "please enter 'n'.\n").lower()
 
     if data_correct == 'n':
-        main()
+        return False
+    else:
+        return True
 
 
 def display_data(name, bmr, tdee, activity_level,
@@ -674,7 +676,7 @@ def display_data(name, bmr, tdee, activity_level,
 
     print(f'you will need to consume {round(goal_calories)} calories per day.')
 
-    print(f'\nFinally, following a {macro_data["diet"]} diet, '
+    print(f'\nFinally, to follow a {macro_data["diet"]} diet, '
           'you will need to consume the following macronutrients:\n')
 
     table = PrettyTable()
@@ -696,71 +698,103 @@ def display_data(name, bmr, tdee, activity_level,
     print(table)
 
 
+def restart_program():
+    '''
+    Allow the user to run the application
+    once again or exit
+    '''
+    run_again = input('\nWould you like to run the Macro Calculator '
+                      'once again?'
+                      "\nTo run again, please enter 'y'."
+                      "\nTo exit, please enter 'n'.\n").lower()
+
+    if run_again == 'n':
+        print('\nThank you for using Macro Calculator. See you next time!')
+        return False
+    else:
+        return True
+
+
 def main():
     '''
     Run all the functions of the program.
     '''
-    name = collect_name()
+    welcome_message()
 
-    age = collect_age()
-    gender_data = select_gender()
+    while True:
+        name = collect_name()
 
-    unit = select_unit()
+        age = collect_age()
+        gender_data = select_gender()
 
-    weight_in_kg = None
-    weight_in_lbs = None
-    height_in_cm = None
-    height_in_inch = None
+        unit = select_unit()
 
-    if unit == 1:
-        weight_in_kg = collect_weight('kg')
-        height_in_cm = collect_height('cm')
-    elif unit == 2:
-        weight_in_lb = collect_weight('lb')
-        height_in_inch = collect_height('inch')
+        weight_in_kg = None
+        weight_in_lbs = None
+        height_in_cm = None
+        height_in_inch = None
 
-        weight_in_kg = convert_weight(weight_in_lb)
-        height_in_cm = convert_height(height_in_inch)
+        if unit == 1:
+            weight_in_kg = collect_weight('kg')
+            height_in_cm = collect_height('cm')
+        elif unit == 2:
+            weight_in_lb = collect_weight('lb')
+            height_in_inch = collect_height('inch')
 
-    activity_data = select_activity_level()
+            weight_in_kg = convert_weight(weight_in_lb)
+            height_in_cm = convert_height(height_in_inch)
 
-    goal_data = select_goal()
+        activity_data = select_activity_level()
 
-    macro_data = select_diet()
+        goal_data = select_goal()
 
-    if unit == 1:
-        data_review(name, age,
-                    gender_data['gender'],
-                    weight_in_kg, height_in_cm, 'kg', 'cm',
-                    activity_data['activity level'],
-                    goal_data, macro_data['diet'])
-    if unit == 2:
-        data_review(name, age,
-                    gender_data['gender'],
-                    weight_in_lb, height_in_inch, 'lb', 'inch',
-                    activity_data['activity level'],
-                    goal_data, macro_data['diet'])
+        macro_data = select_diet()
 
-    bmr = calculate_bmr(weight_in_kg, height_in_cm, age, gender_data['value'])
+        data_correct = True
 
-    tdee = calculate_tdee(bmr, activity_data['value'])
+        if unit == 1:
+            data_correct = data_review(name, age,
+                                       gender_data['gender'],
+                                       weight_in_kg, height_in_cm,
+                                       'kg', 'cm',
+                                       activity_data['activity level'],
+                                       goal_data, macro_data['diet'])
+        if unit == 2:
+            data_correct = data_review(name, age,
+                                       gender_data['gender'],
+                                       weight_in_lb, height_in_inch,
+                                       'lb', 'inch',
+                                       activity_data['activity level'],
+                                       goal_data, macro_data['diet'])
 
-    goal_calories = calculate_goal_calories(tdee, goal_data['value'])
+        if not data_correct:
+            continue
 
-    protein_grams = calculate_macro('protein',
+        bmr = calculate_bmr(weight_in_kg, height_in_cm,
+                            age, gender_data['value'])
+
+        tdee = calculate_tdee(bmr, activity_data['value'])
+
+        goal_calories = calculate_goal_calories(tdee, goal_data['value'])
+
+        protein_grams = calculate_macro('protein',
+                                        goal_calories,
+                                        macro_data['protein'])
+        carbs_grams = calculate_macro('carbs',
+                                      goal_calories,
+                                      macro_data['carbs'])
+        fat_grams = calculate_macro('fat',
                                     goal_calories,
-                                    macro_data['protein'])
-    carbs_grams = calculate_macro('carbs',
-                                  goal_calories,
-                                  macro_data['carbs'])
-    fat_grams = calculate_macro('fat',
-                                goal_calories,
-                                macro_data['fat'])
+                                    macro_data['fat'])
 
-    display_data(name, bmr, tdee, activity_data['activity level'],
-                 goal_data, goal_calories, macro_data,
-                 protein_grams, carbs_grams, fat_grams)
+        display_data(name, bmr, tdee, activity_data['activity level'],
+                     goal_data, goal_calories, macro_data,
+                     protein_grams, carbs_grams, fat_grams)
+
+        run_again = restart_program()
+
+        if not run_again:
+            break
 
 
-welcome_message()
 main()
