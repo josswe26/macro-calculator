@@ -1,15 +1,16 @@
 from prettytable import PrettyTable, ALL
 from colorama import Fore, Back, Style
-import textwrap # Import textwrap to wrap long text for a better visual
+# Import textwrap to wrap long text for a better visual
+import textwrap
 
 
 # COLOR TAGS
 
-i_color = Fore.LIGHTGREEN_EX    # Input color
-e_color = Back.RED + Fore.WHITE # Error color 
-d_color = Fore.LIGHTYELLOW_EX   # Data color
-dim = Style.DIM                 # Dim text
-reset_all = Style.RESET_ALL     # Reset to normal
+i_color = Fore.LIGHTGREEN_EX        # Input color
+e_color = Back.RED + Fore.WHITE     # Error color
+d_color = Fore.LIGHTYELLOW_EX       # Data color
+dim = Style.DIM                     # Dim text
+reset_all = Style.RESET_ALL         # Reset to normal
 
 
 # OUTPUT FUNCTIONS
@@ -121,7 +122,7 @@ def display_data(name, bmr, tdee, activity_level,
     '''
     print(f'\nGreat, {name.capitalize()}! Here are your results:')
 
-    print(f'\nYour BMR is: ' +
+    print('\nYour BMR is: ' +
           d_color +
           f'{round(bmr)} ' +
           reset_all +
@@ -154,7 +155,7 @@ def display_data(name, bmr, tdee, activity_level,
     print('you will need to consume ' + d_color + f'{round(goal_calories)}' +
           reset_all + ' calories per day.')
 
-    print(f'\nFinally, to follow a ' + d_color + macro_data["diet"] +
+    print('\nFinally, to follow a ' + d_color + macro_data["diet"] +
           reset_all + ' diet, you will need to consume the '
           'following macronutrients:\n')
 
@@ -205,7 +206,7 @@ def collect_age():
     '''
     while True:
         age = input(i_color +
-                    f'\nPlease provide your age:\n' +
+                    '\nPlease provide your age:\n' +
                     reset_all)
 
         if validate_age(age):
@@ -261,10 +262,10 @@ def select_unit():
         unit = input(i_color +
                      '\nPlease select the system of measurement '
                      'you would like to use.\n'
-                     '\nIf you would like to use the Metric system, '
-                     'please enter 1.\n'
-                     'If you would like to use the Imperial system, '
-                     'please enter 2.\n' +
+                     '\nIf you would like to use the Metric system '
+                     '(kg / cm), please enter 1.\n'
+                     'If you would like to use the Imperial system '
+                     '(lb / inch), please enter 2.\n' +
                      reset_all)
 
         if unit == '1':
@@ -409,9 +410,12 @@ def select_goal():
                                        '\nHow would you like to lose weight? '
                                        '\nPlease enter a value between 1 and '
                                        '3 to select the desired rate:\n'
-                                       '\n1. Slow (0.5 lb per week).'
-                                       '\n2. Moderate (1 lb per week).'
-                                       '\n3. Fast (2 lb per week).\n' +
+                                       '\n1. Slow (approx. 0.25 kg / '
+                                       '0.5 lb per week).'
+                                       '\n2. Moderate (approx. 0.5 kg / '
+                                       '1 lb per week).'
+                                       '\n3. Fast (approx. 1 kg / '
+                                       '2 lb per week).\n' +
                                        reset_all)
 
                 # Select rate to lose weight
@@ -456,7 +460,7 @@ def select_goal():
                           'to select the desired rate.' +
                           reset_all)
                     continue
-        
+
         # Maintain weight does not have any rate
         elif goal_selection == '2':
             print('\nYou would like to maintain your weight.')
@@ -474,9 +478,12 @@ def select_goal():
                                        '\nHow would you like to gain weight? '
                                        '\nPlease enter a value between 1 and '
                                        '3 to select the desired rate:\n'
-                                       '\n1. Slow (0.5 lb per week).'
-                                       '\n2. Moderate (1 lb per week).'
-                                       '\n3. Fast (2 lb per week).\n' +
+                                       '\n1. Slow (approx. 0.25 kg / '
+                                       '0.5 lb per week).'
+                                       '\n2. Moderate (approx. 0.5 kg / '
+                                       '1 lb per week).'
+                                       '\n3. Fast (approx. 1 kg / '
+                                       '2 lb per week).\n' +
                                        reset_all)
 
                 # Select rate to gain weight
@@ -803,12 +810,14 @@ def calculate_bmr(weight, height, age, gender_value):
     the data provided by the user and return the result
     '''
     print(dim +
-          f'\nCalculating your basal metabolic rate (BMR)...' +
+          '\nCalculating your basal metabolic rate (BMR)...' +
           reset_all)
 
     # Mifflin-St Jeor formula to caculate BMR
-    # Male BMR = [9.99 x weight (kg)] + [6.25 x height (cm)] – [4.92 x age (years)] + 5
-    # Female BMR = [9.99 x weight (kg)] + [6.25 x height (cm)] – [4.92 x age (years)] – 161
+    # Male BMR =
+    # [9.99 x weight (kg)] + [6.25 x height (cm)] – [4.92 x age (years)] + 5
+    # Female BMR =
+    # [9.99 x weight (kg)] + [6.25 x height (cm)] – [4.92 x age (years)] – 161
     bmr = (9.99 * weight) + (6.25 * height) - (4.92 * age) + gender_value
 
     return bmr
@@ -820,10 +829,10 @@ def calculate_tdee(bmr, activity_value):
     using the BMR data and the activity level and return the result
     '''
     print(dim +
-          f'\nCalculating your total daily energy expenditure (TDEE)...' +
+          '\nCalculating your total daily energy expenditure (TDEE)...' +
           reset_all)
 
-    #Calculate TDEE depending on the activity level
+    # Calculate TDEE depending on the activity level
     tdee = bmr * activity_value
 
     return tdee
@@ -835,7 +844,7 @@ def calculate_goal_calories(tdee, goal_value):
     depending on the selected goal
     '''
     print(dim +
-          f'\nCalculating your total calories...' +
+          '\nCalculating your total calories...' +
           reset_all)
 
     # Calculate goalcalories depending on the user's goal
@@ -877,11 +886,6 @@ def main():
         gender_data = select_gender()
 
         unit = select_unit()
-
-        weight_in_kg = None
-        weight_in_lbs = None
-        height_in_cm = None
-        height_in_inch = None
 
         # Collect weight and height depending on the unit selected
         if unit == 1:
