@@ -45,11 +45,16 @@ def welcome_message():
     ''')
 
     print(reset_all)
-    print(textwrap.fill('Use this calculator to help '
-                        'you discover how much of '
-                        'each macronutrient you '
-                        'should eat every day to '
-                        'reach your goals.', 80))
+    print(textwrap.fill('Use the Macro Calculator to help you discover how '
+                        'much of each macronutrient you should eat every day '
+                        'to reach your goals.', 80))
+    print()
+    print(textwrap.fill('A macronutrient (“macro”) is a nutrient that '
+                        'your body needs in large amounts to survive, with '
+                        'the main ones being protein, carbs, and fat. If you '
+                        'want to gain muscle, lose fat, and get strong, you '
+                        'generally want to follow a high-protein, moderate- '
+                        'to high-carb, moderate- to low-fat diet.', 80))
 
 
 def data_review(name, age, gender, weight, height,
@@ -60,7 +65,7 @@ def data_review(name, age, gender, weight, height,
     and allow the user to enter the data again if
     a mistake has been made
     '''
-    print(f'\nThank you for you input, {name.capitalize()}.'
+    print(f'\nThank you for your input, {name.capitalize()}.'
           '\nPlease review the data you provided:\n')
 
     table = PrettyTable(header=False, hrules=ALL)
@@ -309,8 +314,8 @@ def select_activity_level():
     while True:
         level_selection = input(i_color +
                                 '\nSelect your activity level. '
-                                'Please enter the value '
-                                'assigned to each level:\n'
+                                '\nPlease enter a value between 1 and 5 '
+                                'to select the desired level:\n'
                                 '\n1. No activity (sedentary).'
                                 '\n2. A little activity '
                                 '(1 to 3 hours of exercise or sports per week)'
@@ -384,8 +389,8 @@ def select_goal():
     while True:
         goal_selection = input(i_color +
                                '\nChoose your goal. '
-                               'Please enter the value '
-                               'assigned to each goal:\n'
+                               '\nPlease enter a value between 1 and 3 '
+                               'to selecet the desired goal:\n'
                                '\n1. Lose weight.'
                                '\n2. Maintain weight'
                                '\n3. Gain weight\n' +
@@ -395,11 +400,11 @@ def select_goal():
             while True:
                 rate_selection = input(i_color +
                                        '\nHow would you like to lose weight? '
-                                       'Please enter the value '
-                                       'assigned to each rate:\n'
+                                       '\nPlease enter a value between 1 and 3 '
+                                       'to select the desired rate:\n'
                                        '\n1. Slow (0.5 lb per week).'
                                        '\n2. Moderate (1 lb per week).'
-                                       '\n3. Fast (2 lb per week)\n' +
+                                       '\n3. Fast (2 lb per week).\n' +
                                        reset_all)
 
                 if rate_selection == '1':
@@ -458,11 +463,11 @@ def select_goal():
             while True:
                 rate_selection = input(i_color +
                                        '\nHow would you like to gain weight? '
-                                       'Please enter the value '
-                                       'assigned to each rate:\n'
+                                       '\nPlease enter a value between 1 and 3 '
+                                       'to select the desired rate:\n'
                                        '\n1. Slow (0.5 lb per week).'
                                        '\n2. Moderate (1 lb per week).'
-                                       '\n3. Fast (2 lb per week)\n' +
+                                       '\n3. Fast (2 lb per week).\n' +
                                        reset_all)
 
                 if rate_selection == '1':
@@ -525,8 +530,8 @@ def select_diet():
         diet_selection = input(i_color +
                                '\nTo be able to calculate your daily macros, '
                                'choose your prefered diet. '
-                               '\nPlease enter the value '
-                               'assigned to the desired diet:\n'
+                               '\nPlease enter a value between 1 and 6'
+                               'to select the desired diet:\n'
                                '\n1. Balanced.'
                                '\n2. Low-carb.'
                                '\n3. High-carb.'
@@ -742,7 +747,7 @@ def validate_percentage(*args):
     return True
 
 
-# CONVERSION FUNTIONS
+# CONVERSION FUNCTIONS
 
 def convert_weight(weight_in_lbs):
     '''
@@ -813,6 +818,8 @@ def calculate_macro(macro, goal_calories, percentage):
     daily grams to be consumed daily
     depending on the user's goal
     '''
+    print(dim + f'\nCalculating {macro}...' + reset_all)
+
     grams_per_day = goal_calories * percentage
 
     if macro == 'protein' or macro == 'carbs':
