@@ -1,12 +1,24 @@
 from prettytable import PrettyTable, ALL
+from colorama import Fore, Back, Style
 import textwrap
 
+
+# COLOR TAGS
+
+i_color = Fore.LIGHTGREEN_EX
+e_color = Back.RED + Fore.WHITE
+d_color = Fore.LIGHTYELLOW_EX
+dim = Style.DIM
+reset_all = Style.RESET_ALL
+
+
+# OUTPUT FUNCTIONS
 
 def welcome_message():
     '''
     Display the welcome message.
     '''
-    print('''
+    print(Style.BRIGHT + Fore.LIGHTYELLOW_EX + '''
     #     #
     #  #  # ###### #       ####   ####  #    # ######    #####  ####
     #  #  # #      #      #    # #    # ##  ## #           #   #    #
@@ -32,126 +44,162 @@ def welcome_message():
    #####  #    # ######  ####   ####  ###### #    #   #    ####  #    #
     ''')
 
-    print('\n' + textwrap.fill('Use this calculator to help you discover '
-                               'how much of each macronutrient you should eat '
-                               'every day to reach your goals.', 80))
+    print(reset_all)
+    print(textwrap.fill('Use this calculator to help '
+                        'you discover how much of '
+                        'each macronutrient you '
+                        'should eat every day to '
+                        'reach your goals.', 80))
 
+
+def data_review(name, age, gender, weight, height,
+                weight_unit, height_unit, activity_level,
+                goal_data, diet):
+    '''
+    Display the data input by the user for review
+    and allow the user to enter the data again if
+    a mistake has been made
+    '''
+    print(f'\nThank you for you input, {name.capitalize()}.'
+          '\nPlease review the data you provided:\n')
+
+    table = PrettyTable(header=False, hrules=ALL)
+
+    table.add_row(['Name', d_color + name.capitalize() + reset_all])
+    table.add_row(['Age', d_color + f'{age}' + reset_all + ' years old'])
+    table.add_row(['Gender', d_color + gender.capitalize() + reset_all])
+
+    table.add_row(['Weight', d_color + f'{weight}' +
+                  reset_all + f' {weight_unit}'])
+    table.add_row(['Height', d_color + f'{height}' +
+                  reset_all + f' {height_unit}'])
+
+    table.add_row(['Activity Level', d_color +
+                   activity_level.capitalize() +
+                   reset_all])
+
+    if goal_data["rate"]:
+        table.add_row(['Goal', d_color +
+                      goal_data["goal"].capitalize() +
+                      reset_all + '\nat a ' + d_color +
+                      goal_data["rate"] +
+                      reset_all + ' rate.'])
+    else:
+        table.add_row(['Goal', d_color +
+                      goal_data["goal"].capitalize() +
+                      reset_all])
+
+    table.add_row(['Diet', d_color + diet.capitalize() + reset_all])
+
+    print(table)
+
+    data_correct = input(i_color +
+                         '\nIs the data provided correct?'
+                         "\nTo continue, please enter 'y'."
+                         "\nTo enter the data again, "
+                         "please enter 'n'.\n" +
+                         reset_all).lower()
+
+    if data_correct == 'n':
+        return False
+    else:
+        return True
+
+
+def display_data(name, bmr, tdee, activity_level,
+                 goal_data, goal_calories, macro_data,
+                 protein_grams, carbs_grams, fat_grams):
+    '''
+    Format and display the data
+    '''
+    print(f'\nGreat, {name.capitalize()}! Here are your results:')
+
+    print(f'\nYour BMR is: ' +
+          d_color +
+          f'{round(bmr)} ' +
+          reset_all +
+          'calories.')
+
+    print('\n' + dim +
+          textwrap.fill('BMR or basal metabolic rate, is the '
+                        'average amount of calories your body '
+                        'requires every day to fuel essential '
+                        'functions like breathing, pumping blood, '
+                        'producing hormones, and so forth (basically, '
+                        ' it’s how many calories you’d burn resting '
+                        'for 24 hours).', 70) + reset_all)
+
+    print('\nPracticing ' + d_color + f'{activity_level}' + reset_all +
+          ' per week, your TDEE will be: ' + d_color +
+          f'{round(tdee)}' + reset_all + ' calories.')
+    print('\n' + dim + textwrap.fill('TDEE or total daily energy expended is '
+                                     'the average amount of calories you '
+                                     'burn per day.', 70) + reset_all)
+
+    print('\nTo reach your goal of ' + d_color +
+          goal_data["goal"] + reset_all, end='')
+
+    if goal_data['rate']:
+        print(' at a ' + d_color + goal_data["rate"] + reset_all + ' rate,')
+    else:
+        print(',')
+
+    print('you will need to consume ' + d_color + f'{round(goal_calories)}' +
+          reset_all + ' calories per day.')
+
+    print(f'\nFinally, to follow a ' + d_color + macro_data["diet"] +
+          reset_all + ' diet, you will need to consume the '
+          'following macronutrients:\n')
+
+    table = PrettyTable()
+
+    table.field_names = ['Macro', 'Percentage', 'Grams per day']
+
+    table.add_row(['Protein',
+                   f'{int(macro_data["protein"] * 100)}%',
+                   d_color + f'{protein_grams}' +
+                   reset_all + ' g'])
+
+    table.add_row(['Carbs',
+                   f'{int(macro_data["carbs"] * 100)}%',
+                   d_color + f'{carbs_grams}' +
+                   reset_all + ' g'])
+
+    table.add_row(['Fat',
+                   f'{int(macro_data["fat"] * 100)}%',
+                   d_color + f'{fat_grams}' +
+                   reset_all + ' g'])
+
+    print(table)
+
+
+# INPUT FUNCTIONS
 
 def collect_name():
     '''
     Collect the user's name and return the value
     '''
-    name = input('\nTo proceed, please enter your name: \n')
+    name = input(i_color +
+                 '\nTo proceed, please enter your name: \n' +
+                 reset_all)
     print(f'\nThank you, {name.capitalize()}!')
 
     return name
 
 
-def select_unit():
+def collect_age():
     '''
-    Allow the user to make a selection of the desired
-    system of measurement to be used in the program
-    '''
-    while True:
-        unit = input('\nPlease select the system of measurement '
-                     'you would like to use.\n'
-                     '\nIf you would like to use the Metric system, '
-                     'please enter 1.\n'
-                     'If you would like to use the Imperial system, '
-                     'please enter 2.\n')
-
-        if unit == '1':
-            print('\nGreat, you have selected the Metric system.')
-            return 1
-        elif unit == '2':
-            print('\nGreat, you have selected the Imperial system.')
-            return 2
-        else:
-            print('\nInvalid selection. You need to enter 1 or 2 '
-                  'to select the desired unit.')
-            continue
-
-
-def validate_weight(weight):
-    '''
-    Validate the provided weight value.
-    '''
-    try:
-        weight = int(weight)
-        if weight < 1 or weight > 500:
-            raise ValueError('The weight value must be between 1 and 500.')
-    except ValueError as e:
-        print(f'\nInvalid weight. {e} Please provide your weight again.')
-        return False
-
-    return True
-
-
-def validate_height(height, unit):
-    '''
-    Validate the provided height value in cm.
-    '''
-    if unit == 'cm':
-        max_value = 250
-    else:
-        max_value = 100
-
-    try:
-        height = int(height)
-        if height < 1 or height > max_value:
-            raise ValueError(f'The height value must be between '
-                             '1 and {max_value}.')
-    except ValueError as e:
-        print(f'\nInvalid height. {e} Please provide your height again.')
-        return False
-
-    return True
-
-
-def collect_weight(unit):
-    '''
-    Collect the user's weight in the selected
-    unit and return the value
+    Collect the user's age and return the value
     '''
     while True:
-        weight = input(f'\nEnter your weight in {unit}:\n')
+        age = input(i_color +
+                    f'\nPlease provide your age:\n' +
+                    reset_all)
 
-        if validate_weight(weight):
-            return int(weight)
+        if validate_age(age):
+            return int(age)
         else:
             continue
-
-
-def collect_height(unit):
-    '''
-    Collect the user's height in the selected unit
-    to access it later in the program.
-    '''
-    while True:
-        height = input(f'\nEnter your height in {unit}:\n')
-
-        if validate_height(height, unit):
-            return int(height)
-        else:
-            continue
-
-
-def convert_weight(weight_in_lbs):
-    '''
-    Convert the weight in lbs to kg
-    '''
-    weight_in_kg = weight_in_lbs / 2.205
-
-    return int(round(weight_in_kg))
-
-
-def convert_height(height_in_inch):
-    '''
-    Convert the height in inch to cm
-    '''
-    height_in_cm = height_in_inch * 2.54
-
-    return int(round(height_in_cm))
 
 
 def select_gender():
@@ -160,9 +208,11 @@ def select_gender():
     and return a dictionary including the gender data
     '''
     while True:
-        gender_selection = input('\nPlease select your gender\n'
+        gender_selection = input(i_color +
+                                 '\nPlease select your gender\n'
                                  '\nFor female, please enter 1.\n'
-                                 'For male, please enter 2.\n')
+                                 'For male, please enter 2.\n' +
+                                 reset_all)
 
         if gender_selection == '1':
             print('\nFemale has been selected.')
@@ -183,35 +233,70 @@ def select_gender():
             return gender_data
 
         else:
-            print('\nInvalid selection. You need to enter 1 or 2 '
-                  'to select your gender.')
+            print('\n' + e_color +
+                  'Invalid selection. You need to enter 1 or 2 '
+                  'to select your gender.' +
+                  reset_all)
             continue
 
 
-def validate_age(age):
+def select_unit():
     '''
-    Validate the provided age value.
-    '''
-    try:
-        age = int(age)
-        if age < 1 or age > 120:
-            raise ValueError('The age value must be between 1 and 120.')
-    except ValueError as e:
-        print(f'\nInvalid age. {e} Please provide your age again.')
-        return False
-
-    return True
-
-
-def collect_age():
-    '''
-    Collect the user's age and return the value
+    Allow the user to make a selection of the desired
+    system of measurement to be used in the program
     '''
     while True:
-        age = input(f'\nPlease provide your age:\n')
+        unit = input(i_color +
+                     '\nPlease select the system of measurement '
+                     'you would like to use.\n'
+                     '\nIf you would like to use the Metric system, '
+                     'please enter 1.\n'
+                     'If you would like to use the Imperial system, '
+                     'please enter 2.\n' +
+                     reset_all)
 
-        if validate_age(age):
-            return int(age)
+        if unit == '1':
+            print('\nGreat, you have selected the Metric system.')
+            return 1
+        elif unit == '2':
+            print('\nGreat, you have selected the Imperial system.')
+            return 2
+        else:
+            print('\n' + e_color +
+                  'Invalid selection. You need to enter 1 or 2 '
+                  'to select the desired unit.' +
+                  reset_all)
+            continue
+
+
+def collect_weight(unit):
+    '''
+    Collect the user's weight in the selected
+    unit and return the value
+    '''
+    while True:
+        weight = input(i_color +
+                       f'\nEnter your weight in {unit}:\n' +
+                       reset_all)
+
+        if validate_weight(weight):
+            return int(weight)
+        else:
+            continue
+
+
+def collect_height(unit):
+    '''
+    Collect the user's height in the selected unit
+    to access it later in the program.
+    '''
+    while True:
+        height = input(i_color +
+                       f'\nEnter your height in {unit}:\n' +
+                       reset_all)
+
+        if validate_height(height, unit):
+            return int(height)
         else:
             continue
 
@@ -222,7 +307,8 @@ def select_activity_level():
     return a dictionary including the activity level data
     '''
     while True:
-        level_selection = input('\nSelect your activity level. '
+        level_selection = input(i_color +
+                                '\nSelect your activity level. '
                                 'Please enter the value '
                                 'assigned to each level:\n'
                                 '\n1. No activity (sedentary).'
@@ -232,8 +318,9 @@ def select_activity_level():
                                 '(4 to 6 hours of exercise or sports per week)'
                                 '\n4. A lot of activity '
                                 '(7 to 9 hours of exercise or sports per week)'
-                                '\n5. A TON of activity '
-                                '(10+ hours of exercise or sports per week)\n')
+                                '\n5. A TON of activity (10+ hours of '
+                                'exercise or sports per week)\n' +
+                                reset_all)
 
         if level_selection == '1':
             print('\nYou selected: No activity.')
@@ -281,9 +368,11 @@ def select_activity_level():
             return activity_data
 
         else:
-            print('\nInvalid selection. '
+            print('\n' + e_color +
+                  'Invalid selection. '
                   'You need to enter a number between 1 and 5 '
-                  'to select your activity level.')
+                  'to select your activity level.' +
+                  reset_all)
             continue
 
 
@@ -293,21 +382,25 @@ def select_goal():
     a dictionary including the goal data
     '''
     while True:
-        goal_selection = input('\nChoose your goal. '
+        goal_selection = input(i_color +
+                               '\nChoose your goal. '
                                'Please enter the value '
                                'assigned to each goal:\n'
                                '\n1. Lose weight.'
                                '\n2. Maintain weight'
-                               '\n3. Gain weight\n')
+                               '\n3. Gain weight\n' +
+                               reset_all)
 
         if goal_selection == '1':
             while True:
-                rate_selection = input('\nHow would you like to lose weight? '
+                rate_selection = input(i_color +
+                                       '\nHow would you like to lose weight? '
                                        'Please enter the value '
                                        'assigned to each rate:\n'
                                        '\n1. Slow (0.5 lb per week).'
                                        '\n2. Moderate (1 lb per week).'
-                                       '\n3. Fast (2 lb per week)\n')
+                                       '\n3. Fast (2 lb per week)\n' +
+                                       reset_all)
 
                 if rate_selection == '1':
                     print('\nYou would like to lose weight at a slow rate.')
@@ -344,9 +437,11 @@ def select_goal():
                     return goal_data
 
                 else:
-                    print('\nInvalid selection. '
+                    print('\n' + e_color +
+                          'Invalid selection. '
                           'You need to enter a number between 1 and 3 '
-                          'to select the desired rate.')
+                          'to select the desired rate.' +
+                          reset_all)
                     continue
 
         elif goal_selection == '2':
@@ -361,12 +456,14 @@ def select_goal():
 
         elif goal_selection == '3':
             while True:
-                rate_selection = input('\nHow would you like to gain weight? '
+                rate_selection = input(i_color +
+                                       '\nHow would you like to gain weight? '
                                        'Please enter the value '
                                        'assigned to each rate:\n'
                                        '\n1. Slow (0.5 lb per week).'
                                        '\n2. Moderate (1 lb per week).'
-                                       '\n3. Fast (2 lb per week)\n')
+                                       '\n3. Fast (2 lb per week)\n' +
+                                       reset_all)
 
                 if rate_selection == '1':
                     print('\nYou would like to gain weight at a slow rate.')
@@ -403,99 +500,20 @@ def select_goal():
                     return goal_data
 
                 else:
-                    print('\nInvalid selection. '
+                    print('\n' + e_color +
+                          'Invalid selection. '
                           'You need to enter a number between 1 and 3 '
-                          'to select the desired rate.')
+                          'to select the desired rate.' +
+                          reset_all)
                     continue
 
         else:
-            print('\nInvalid selection. '
+            print('\n' + e_color +
+                  'Invalid selection. '
                   'You need to enter a number between 1 and 3 '
-                  'to select the desired goal.')
+                  'to select the desired goal.' +
+                  reset_all)
             continue
-
-
-def calculate_bmr(weight, height, age, gender_value):
-    '''
-    Calculate the user's basal metabolic rate (BMR) using
-    the data provided by the user and return the result
-    '''
-    print(f'\nCalculating your basal metabolic rate (BMR)...')
-
-    bmr = (9.99 * weight) + (6.25 * height) - (4.92 + age) + gender_value
-
-    return bmr
-
-
-def calculate_tdee(bmr, activity_value):
-    '''
-    Calculate the user's total daily energy expenditure (TDEE)
-    using the BMR data and the activity level and return the result
-    '''
-    print(f'\nCalculating your total daily energy expenditure (TDEE)...')
-
-    tdee = bmr * activity_value
-
-    return tdee
-
-
-def calculate_goal_calories(tdee, goal_value):
-    '''
-    Calculate the total calories per day
-    depending on the selected goal
-    '''
-    print(f'\nCalculating your total calories...')
-
-    goal_calories = tdee * goal_value
-
-    return goal_calories
-
-
-def validate_macro(macro_percentage):
-    '''
-    Validate the provided macro percentage value.
-    '''
-    try:
-        percentage = int(macro_percentage)
-        if percentage < 1 or percentage > 100:
-            raise ValueError('The percentage value must be between 1 and 100.')
-    except ValueError as e:
-        print(f'\nInvalid percentage. {e} '
-              'Please provide your percentage again.')
-        return False
-
-    return True
-
-
-def collect_macro(macro_type):
-    '''
-    Allow the user to input a custom macro
-    percentage and return the value
-    '''
-    while True:
-        macro = input(f'\nPlease enter the desired {macro_type} percentage:\n')
-
-        if validate_macro(macro):
-            return int(macro)
-        else:
-            continue
-
-
-def validate_percentage(*args):
-    '''
-    Validate the total percentage value.
-    '''
-    try:
-        percentage = 0
-        for num in args:
-            percentage += num
-        if percentage != 100:
-            raise ValueError('The total percentage value must be exactly 100.')
-    except ValueError as e:
-        print(f'\nInvalid input. {e} Please try again.')
-        return False
-
-    return True
 
 
 def select_diet():
@@ -504,7 +522,8 @@ def select_diet():
     and return the macronutrient split data
     '''
     while True:
-        diet_selection = input('\nTo be able to calculate your daily macros, '
+        diet_selection = input(i_color +
+                               '\nTo be able to calculate your daily macros, '
                                'choose your prefered diet. '
                                '\nPlease enter the value '
                                'assigned to the desired diet:\n'
@@ -513,7 +532,8 @@ def select_diet():
                                '\n3. High-carb.'
                                '\n4. High-protein.'
                                '\n5. Ketogenic.'
-                               '\n6. Custom (Advanced users only).\n')
+                               '\n6. Custom (Advanced users only).\n' +
+                               reset_all)
 
         if diet_selection == '1':
 
@@ -579,10 +599,212 @@ def select_diet():
                     continue
 
         else:
-            print('\nInvalid selection. '
+            print('\n' + e_color +
+                  'Invalid selection. '
                   'You need to enter a number between 1 and 6 '
-                  'to choose the desired diet.')
+                  'to choose the desired diet.' +
+                  reset_all)
             continue
+
+
+def collect_macro(macro_type):
+    '''
+    Allow the user to input a custom macro
+    percentage and return the value
+    '''
+    while True:
+        macro = input(i_color +
+                      '\nPlease enter the desired '
+                      f'{macro_type} percentage:\n' +
+                      reset_all)
+
+        if validate_macro(macro):
+            return int(macro)
+        else:
+            continue
+
+
+def restart_program():
+    '''
+    Allow the user to run the application
+    once again or exit
+    '''
+    run_again = input(i_color +
+                      '\nWould you like to run the Macro Calculator '
+                      'once again?'
+                      "\nTo run again, please enter 'y'."
+                      "\nTo exit, please enter 'n'.\n" +
+                      reset_all).lower()
+
+    if run_again == 'n':
+        print('\nThank you for using Macro Calculator. See you next time!')
+        return False
+    else:
+        return True
+
+
+# VALIDATION FUNCTIONS
+
+def validate_weight(weight):
+    '''
+    Validate the provided weight value.
+    '''
+    try:
+        weight = int(weight)
+        if weight < 1 or weight > 500:
+            raise ValueError('The weight value must be between 1 and 500.')
+    except ValueError as e:
+        print('\n' + e_color +
+              f'Invalid weight. {e} Please provide your weight again.' +
+              reset_all)
+        return False
+
+    return True
+
+
+def validate_height(height, unit):
+    '''
+    Validate the provided height value in cm.
+    '''
+    if unit == 'cm':
+        max_value = 250
+    else:
+        max_value = 100
+
+    try:
+        height = int(height)
+        if height < 1 or height > max_value:
+            raise ValueError(f'The height value must be between '
+                             f'1 and {max_value}.')
+    except ValueError as e:
+        print('\n' + e_color +
+              f'Invalid height. {e} Please provide your height again.' +
+              reset_all)
+        return False
+
+    return True
+
+
+def validate_age(age):
+    '''
+    Validate the provided age value.
+    '''
+    try:
+        age = int(age)
+        if age < 1 or age > 120:
+            raise ValueError('The age value must be between 1 and 120.')
+    except ValueError as e:
+
+        print('\n' + e_color +
+              f'Invalid age. {e} Please provide '
+              'your age again.' +
+              reset_all)
+
+        return False
+
+    return True
+
+
+def validate_macro(macro_percentage):
+    '''
+    Validate the provided macro percentage value.
+    '''
+    try:
+        percentage = int(macro_percentage)
+        if percentage < 1 or percentage > 100:
+            raise ValueError('The percentage value must be between 1 and 100.')
+    except ValueError as e:
+        print('\n' + e_color +
+              f'Invalid percentage. {e} '
+              'Please provide your percentage again.' +
+              reset_all)
+        return False
+
+    return True
+
+
+def validate_percentage(*args):
+    '''
+    Validate the total percentage value.
+    '''
+    try:
+        percentage = 0
+        for num in args:
+            percentage += num
+        if percentage != 100:
+            raise ValueError('The total percentage value must be exactly 100.')
+    except ValueError as e:
+        print('\n' + e_color +
+              f'Invalid input. {e} Please try again.' +
+              reset_all)
+        return False
+
+    return True
+
+
+# CONVERSION FUNTIONS
+
+def convert_weight(weight_in_lbs):
+    '''
+    Convert the weight in lbs to kg
+    '''
+    weight_in_kg = weight_in_lbs / 2.205
+
+    return int(round(weight_in_kg))
+
+
+def convert_height(height_in_inch):
+    '''
+    Convert the height in inch to cm
+    '''
+    height_in_cm = height_in_inch * 2.54
+
+    return int(round(height_in_cm))
+
+
+# CALCULATION FUNCTIONS
+
+
+def calculate_bmr(weight, height, age, gender_value):
+    '''
+    Calculate the user's basal metabolic rate (BMR) using
+    the data provided by the user and return the result
+    '''
+    print(dim +
+          f'\nCalculating your basal metabolic rate (BMR)...' +
+          reset_all)
+
+    bmr = (9.99 * weight) + (6.25 * height) - (4.92 + age) + gender_value
+
+    return bmr
+
+
+def calculate_tdee(bmr, activity_value):
+    '''
+    Calculate the user's total daily energy expenditure (TDEE)
+    using the BMR data and the activity level and return the result
+    '''
+    print(dim +
+          f'\nCalculating your total daily energy expenditure (TDEE)...' +
+          reset_all)
+
+    tdee = bmr * activity_value
+
+    return tdee
+
+
+def calculate_goal_calories(tdee, goal_value):
+    '''
+    Calculate the total calories per day
+    depending on the selected goal
+    '''
+    print(dim +
+          f'\nCalculating your total calories...' +
+          reset_all)
+
+    goal_calories = tdee * goal_value
+
+    return goal_calories
 
 
 def calculate_macro(macro, goal_calories, percentage):
@@ -601,119 +823,7 @@ def calculate_macro(macro, goal_calories, percentage):
     return int(round(grams_per_day))
 
 
-def data_review(name, age, gender, weight, height,
-                weight_unit, height_unit, activity_level,
-                goal_data, diet):
-    '''
-    Display the data input by the user for review
-    and allow the user to enter the data again if
-    a mistake has been made
-    '''
-    print(f'\nThank you for you input, {name.capitalize()}.'
-          '\nPlease review the data you provided:\n')
-
-    table = PrettyTable(header=False, hrules=ALL)
-
-    table.add_row(['Name', name.capitalize()])
-    table.add_row(['Age', f'{age} years old'])
-    table.add_row(['Gender', gender.capitalize()])
-
-    table.add_row(['Weight', f'{weight} {weight_unit}'])
-    table.add_row(['Height', f'{height} {height_unit}'])
-
-    table.add_row(['Activity Level', activity_level.capitalize()])
-
-    if goal_data["rate"]:
-        table.add_row(['Goal', f'{goal_data["goal"].capitalize()}'
-                       f'\nat a {goal_data["rate"]} rate.'])
-    else:
-        table.add_row(['Goal', f'{goal_data["goal"].capitalize()}'])
-
-    table.add_row(['Diet', diet.capitalize()])
-
-    print(table)
-
-    data_correct = input('\nIs the data provided correct?'
-                         "\nTo continue, please enter 'y'."
-                         "\nTo enter the data again, "
-                         "please enter 'n'.\n").lower()
-
-    if data_correct == 'n':
-        return False
-    else:
-        return True
-
-
-def display_data(name, bmr, tdee, activity_level,
-                 goal_data, goal_calories, macro_data,
-                 protein_grams, carbs_grams, fat_grams):
-    '''
-    Format and display the data
-    '''
-    print(f'\nGreat, {name.capitalize()}! Here are your results:')
-
-    print(f'\nYour BMR is: {round(bmr)} calories.')
-    print('\n' + textwrap.fill('BMR or basal metabolic rate, is the '
-                               'average amount of calories your body '
-                               'requires every day to fuel essential '
-                               'functions like breathing, pumping blood, '
-                               'producing hormones, and so forth (basically, '
-                               ' it’s how many calories you’d burn resting '
-                               'for 24 hours).', 70))
-
-    print(f'\nPracticing {activity_level} per week, your TDEE will be: '
-          f'{round(tdee)} calories.')
-    print('\n' + textwrap.fill('TDEE or total daily energy expended is '
-                               'the average amount of calories you '
-                               'burn per day.', 70))
-
-    print(f'\nTo reach your goal of {goal_data["goal"]}', end='')
-
-    if goal_data['rate']:
-        print(f' at a {goal_data["rate"]} rate,')
-    else:
-        print(',')
-
-    print(f'you will need to consume {round(goal_calories)} calories per day.')
-
-    print(f'\nFinally, to follow a {macro_data["diet"]} diet, '
-          'you will need to consume the following macronutrients:\n')
-
-    table = PrettyTable()
-
-    table.field_names = ['Macro', 'Percentage', 'Grams per day']
-
-    table.add_row(['Protein',
-                   f'{int(macro_data["protein"] * 100)}%',
-                   f'{protein_grams}g'])
-
-    table.add_row(['Carbs',
-                   f'{int(macro_data["carbs"] * 100)}%',
-                   f'{carbs_grams}g'])
-
-    table.add_row(['Fat',
-                   f'{int(macro_data["fat"] * 100)}%',
-                   f'{fat_grams}g'])
-
-    print(table)
-
-
-def restart_program():
-    '''
-    Allow the user to run the application
-    once again or exit
-    '''
-    run_again = input('\nWould you like to run the Macro Calculator '
-                      'once again?'
-                      "\nTo run again, please enter 'y'."
-                      "\nTo exit, please enter 'n'.\n").lower()
-
-    if run_again == 'n':
-        print('\nThank you for using Macro Calculator. See you next time!')
-        return False
-    else:
-        return True
-
+# MAIN FUNCTION
 
 def main():
     '''
