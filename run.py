@@ -1,22 +1,22 @@
 from prettytable import PrettyTable, ALL
 from colorama import Fore, Back, Style
-import textwrap
+import textwrap # Import textwrap to wrap long text for a better visual
 
 
 # COLOR TAGS
 
-i_color = Fore.LIGHTGREEN_EX
-e_color = Back.RED + Fore.WHITE
-d_color = Fore.LIGHTYELLOW_EX
-dim = Style.DIM
-reset_all = Style.RESET_ALL
+i_color = Fore.LIGHTGREEN_EX    # Input color
+e_color = Back.RED + Fore.WHITE # Error color 
+d_color = Fore.LIGHTYELLOW_EX   # Data color
+dim = Style.DIM                 # Dim text
+reset_all = Style.RESET_ALL     # Reset to normal
 
 
 # OUTPUT FUNCTIONS
 
 def welcome_message():
     '''
-    Display the welcome message.
+    Display the welcome logo and message
     '''
     print(Style.BRIGHT + Fore.LIGHTYELLOW_EX + '''
     #     #
@@ -68,6 +68,7 @@ def data_review(name, age, gender, weight, height,
     print(f'\nThank you for your input, {name.capitalize()}.'
           '\nPlease review the data you provided:\n')
 
+    # Create table to display data to review
     table = PrettyTable(header=False, hrules=ALL)
 
     table.add_row(['Name', d_color + name.capitalize() + reset_all])
@@ -83,6 +84,7 @@ def data_review(name, age, gender, weight, height,
                    activity_level.capitalize() +
                    reset_all])
 
+    # Print rate text only if rate data available. Not for Mantain weight
     if goal_data["rate"]:
         table.add_row(['Goal', d_color +
                       goal_data["goal"].capitalize() +
@@ -158,6 +160,7 @@ def display_data(name, bmr, tdee, activity_level,
 
     table = PrettyTable()
 
+    # Create table to display macro data
     table.field_names = ['Macro', 'Percentage', 'Grams per day']
 
     table.add_row(['Protein',
@@ -411,6 +414,7 @@ def select_goal():
                                        '\n3. Fast (2 lb per week).\n' +
                                        reset_all)
 
+                # Select rate to lose weight
                 if rate_selection == '1':
                     print('\nYou would like to lose weight at a slow rate.')
 
@@ -452,7 +456,8 @@ def select_goal():
                           'to select the desired rate.' +
                           reset_all)
                     continue
-
+        
+        # Maintain weight does not have any rate
         elif goal_selection == '2':
             print('\nYou would like to maintain your weight.')
             goal_data = {
@@ -474,6 +479,7 @@ def select_goal():
                                        '\n3. Fast (2 lb per week).\n' +
                                        reset_all)
 
+                # Select rate to gain weight
                 if rate_selection == '1':
                     print('\nYou would like to gain weight at a slow rate.')
 
@@ -659,6 +665,7 @@ def validate_name(name):
     Validate the provided name value
     '''
     try:
+        # Validate that name contains any characters
         if len(name) <= 0:
             raise ValueError("The name can't be left empty.")
     except ValueError as e:
@@ -799,7 +806,10 @@ def calculate_bmr(weight, height, age, gender_value):
           f'\nCalculating your basal metabolic rate (BMR)...' +
           reset_all)
 
-    bmr = (9.99 * weight) + (6.25 * height) - (4.92 + age) + gender_value
+    # Mifflin-St Jeor formula to caculate BMR
+    # Male BMR = [9.99 x weight (kg)] + [6.25 x height (cm)] – [4.92 x age (years)] + 5
+    # Female BMR = [9.99 x weight (kg)] + [6.25 x height (cm)] – [4.92 x age (years)] – 161
+    bmr = (9.99 * weight) + (6.25 * height) - (4.92 * age) + gender_value
 
     return bmr
 
@@ -813,6 +823,7 @@ def calculate_tdee(bmr, activity_value):
           f'\nCalculating your total daily energy expenditure (TDEE)...' +
           reset_all)
 
+    #Calculate TDEE depending on the activity level
     tdee = bmr * activity_value
 
     return tdee
@@ -827,6 +838,7 @@ def calculate_goal_calories(tdee, goal_value):
           f'\nCalculating your total calories...' +
           reset_all)
 
+    # Calculate goalcalories depending on the user's goal
     goal_calories = tdee * goal_value
 
     return goal_calories
@@ -871,6 +883,7 @@ def main():
         height_in_cm = None
         height_in_inch = None
 
+        # Collect weight and height depending on the unit selected
         if unit == 1:
             weight_in_kg = collect_weight('kg')
             height_in_cm = collect_height('cm')
@@ -889,6 +902,7 @@ def main():
 
         data_correct = True
 
+        # Display the data depending on the unit selected
         if unit == 1:
             data_correct = data_review(name, age,
                                        gender_data['gender'],
@@ -904,6 +918,7 @@ def main():
                                        activity_data['activity level'],
                                        goal_data, macro_data['diet'])
 
+        # Restart the program if the user does not approve the data
         if not data_correct:
             continue
 
@@ -930,6 +945,7 @@ def main():
 
         run_again = restart_program()
 
+        # Exit or run program again depending on user's request
         if not run_again:
             break
 
