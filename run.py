@@ -184,12 +184,16 @@ def collect_name():
     '''
     Collect the user's name and return the value
     '''
-    name = input(i_color +
-                 '\nTo proceed, please enter your name: \n' +
-                 reset_all)
-    print(f'\nThank you, {name.capitalize()}!')
+    while True:
+        name = input(i_color +
+                     '\nTo proceed, please enter your name: \n' +
+                     reset_all)
 
-    return name
+        if validate_name(name):
+            print(f'\nThank you, {name.capitalize()}!')
+            return name
+        else:
+            continue
 
 
 def collect_age():
@@ -293,7 +297,7 @@ def collect_weight(unit):
 def collect_height(unit):
     '''
     Collect the user's height in the selected unit
-    to access it later in the program.
+    to access it later in the program
     '''
     while True:
         height = input(i_color +
@@ -400,8 +404,8 @@ def select_goal():
             while True:
                 rate_selection = input(i_color +
                                        '\nHow would you like to lose weight? '
-                                       '\nPlease enter a value between 1 and 3 '
-                                       'to select the desired rate:\n'
+                                       '\nPlease enter a value between 1 and '
+                                       '3 to select the desired rate:\n'
                                        '\n1. Slow (0.5 lb per week).'
                                        '\n2. Moderate (1 lb per week).'
                                        '\n3. Fast (2 lb per week).\n' +
@@ -463,8 +467,8 @@ def select_goal():
             while True:
                 rate_selection = input(i_color +
                                        '\nHow would you like to gain weight? '
-                                       '\nPlease enter a value between 1 and 3 '
-                                       'to select the desired rate:\n'
+                                       '\nPlease enter a value between 1 and '
+                                       '3 to select the desired rate:\n'
                                        '\n1. Slow (0.5 lb per week).'
                                        '\n2. Moderate (1 lb per week).'
                                        '\n3. Fast (2 lb per week).\n' +
@@ -650,9 +654,25 @@ def restart_program():
 
 # VALIDATION FUNCTIONS
 
+def validate_name(name):
+    '''
+    Validate the provided name value
+    '''
+    try:
+        if len(name) <= 0:
+            raise ValueError("The name can't be left empty.")
+    except ValueError as e:
+        print('\n' + e_color +
+              f'Invalid name. {e} Please provide your name again.' +
+              reset_all)
+        return False
+
+    return True
+
+
 def validate_weight(weight):
     '''
-    Validate the provided weight value.
+    Validate the provided weight value
     '''
     try:
         weight = int(weight)
@@ -669,7 +689,7 @@ def validate_weight(weight):
 
 def validate_height(height, unit):
     '''
-    Validate the provided height value in cm.
+    Validate the provided height value in cm
     '''
     if unit == 'cm':
         max_value = 250
@@ -692,7 +712,7 @@ def validate_height(height, unit):
 
 def validate_age(age):
     '''
-    Validate the provided age value.
+    Validate the provided age value
     '''
     try:
         age = int(age)
@@ -712,7 +732,7 @@ def validate_age(age):
 
 def validate_macro(macro_percentage):
     '''
-    Validate the provided macro percentage value.
+    Validate the provided macro percentage value
     '''
     try:
         percentage = int(macro_percentage)
@@ -730,7 +750,7 @@ def validate_macro(macro_percentage):
 
 def validate_percentage(*args):
     '''
-    Validate the total percentage value.
+    Validate the total percentage value
     '''
     try:
         percentage = 0
