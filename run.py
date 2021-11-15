@@ -535,14 +535,13 @@ def select_diet():
         diet_selection = input(i_color +
                                '\nTo be able to calculate your daily macros, '
                                'choose your prefered diet. '
-                               '\nPlease enter a value between 1 and 6 '
+                               '\nPlease enter a value between 1 and 5 '
                                'to select the desired diet:\n'
                                '\n1. Balanced.'
                                '\n2. Low-carb.'
                                '\n3. High-carb.'
                                '\n4. High-protein.'
-                               '\n5. Ketogenic.'
-                               '\n6. Custom (Advanced users only).\n' +
+                               '\n5. Ketogenic.\n' +
                                reset_all)
 
         if diet_selection == '1':
@@ -590,48 +589,48 @@ def select_diet():
 
             return macro_data
 
-        elif diet_selection == '6':
-            while True:
-                protein = collect_macro('protein')
-                carbs = collect_macro('carbs')
-                fat = collect_macro('fat')
+        # elif diet_selection == '6':
+        #     while True:
+        #         protein = collect_macro('protein')
+        #         carbs = collect_macro('carbs')
+        #         fat = collect_macro('fat')
 
-                if validate_percentage(protein, carbs, fat):
+        #         if validate_percentage(protein, carbs, fat):
 
-                    macro_data = {
-                        'diet': 'custom', 'protein': protein / 100,
-                        'carbs': carbs / 100, 'fat': fat / 100
-                        }
+        #             macro_data = {
+        #                 'diet': 'custom', 'protein': protein / 100,
+        #                 'carbs': carbs / 100, 'fat': fat / 100
+        #                 }
 
-                    return macro_data
+        #             return macro_data
 
-                else:
-                    continue
+        #         else:
+        #             continue
 
         else:
             print('\n' + e_color +
                   'Invalid selection. '
-                  'You need to enter a number between 1 and 6 '
+                  'You need to enter a number between 1 and 5 '
                   'to choose the desired diet.' +
                   reset_all)
             continue
 
 
-def collect_macro(macro_type):
-    '''
-    Allow the user to input a custom macro
-    percentage and return the value
-    '''
-    while True:
-        macro = input(i_color +
-                      '\nPlease enter the desired '
-                      f'{macro_type} percentage:\n' +
-                      reset_all)
+# def collect_macro(macro_type):
+#     '''
+#     Allow the user to input a custom macro
+#     percentage and return the value
+#     '''
+#     while True:
+#         macro = input(i_color +
+#                       '\nPlease enter the desired '
+#                       f'{macro_type} percentage:\n' +
+#                       reset_all)
 
-        if validate_macro(macro):
-            return int(macro)
-        else:
-            continue
+#         if validate_macro(macro):
+#             return int(macro)
+#         else:
+#             continue
 
 
 def restart_program():
@@ -732,41 +731,41 @@ def validate_age(age):
     return True
 
 
-def validate_macro(macro_percentage):
-    '''
-    Validate the provided macro percentage value
-    '''
-    try:
-        percentage = int(macro_percentage)
-        if percentage < 1 or percentage > 100:
-            raise ValueError('The percentage value must be between 1 and 100.')
-    except ValueError as e:
-        print('\n' + e_color +
-              f'Invalid percentage. {e} '
-              'Please provide your percentage again.' +
-              reset_all)
-        return False
+# def validate_macro(macro_percentage):
+#     '''
+#     Validate the provided macro percentage value
+#     '''
+#     try:
+#         percentage = int(macro_percentage)
+#         if percentage < 1 or percentage > 100:
+#             raise ValueError('The percentage value must be between 1 and 100.')
+#     except ValueError as e:
+#         print('\n' + e_color +
+#               f'Invalid percentage. {e} '
+#               'Please provide your percentage again.' +
+#               reset_all)
+#         return False
 
-    return True
+#     return True
 
 
-def validate_percentage(*args):
-    '''
-    Validate the total percentage value
-    '''
-    try:
-        percentage = 0
-        for num in args:
-            percentage += num
-        if percentage != 100:
-            raise ValueError('The total percentage value must be exactly 100.')
-    except ValueError as e:
-        print('\n' + e_color +
-              f'Invalid input. {e} Please try again.' +
-              reset_all)
-        return False
+# def validate_percentage(*args):
+#     '''
+#     Validate the total percentage value
+#     '''
+#     try:
+#         percentage = 0
+#         for num in args:
+#             percentage += num
+#         if percentage != 100:
+#             raise ValueError('The total percentage value must be exactly 100.')
+#     except ValueError as e:
+#         print('\n' + e_color +
+#               f'Invalid input. {e} Please try again.' +
+#               reset_all)
+#         return False
 
-    return True
+#     return True
 
 
 # CONVERSION FUNCTIONS
