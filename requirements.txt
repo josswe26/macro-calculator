@@ -1,1 +1,2 @@
-# Your requirements go here
+prettytable==2.4.0
+colorama==0.4.4
