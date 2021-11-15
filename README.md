@@ -11,7 +11,8 @@ There are three principal classes of macronutrients: carbohydrate, protein, and 
     1. [Project Goals](#project-goals)
     2. [User Stories](#user-stories)
     3. [Color Scheme](#color-scheme)
-    4. [Flowchart](#flowchart)
+    4. [Data Model](#data-model)
+    5. [Flowchart](#flowchart)
 2. [Features](#features)
 3. [Data Model](#data-model)
 4. [Technologies Used](#technologies-used)
@@ -62,6 +63,16 @@ Here are the colors being used:
 
 * Messages are displayed in the default terminal color.
 
+### Data Model
+
+Simple data as the name, age, weight and height are being returned and stored as variables in order to access them in the future to display the data back to the user or to make calculations.
+
+The unit selector returns 1 or 2 to be able to use them in if statements to choose different paths in the logic.
+
+More complex data as the gender, activity level, user's goal and diet is being stored as dictionaries as they contain a description of the selection to display back to the user, but also contain values to use in the different calculations.
+
+Calculations are stored as variables to be able to format them and display them back to the user.
+
 ### Flowchart
 
 The following flowchart was designed using [Miro](https://miro.com/) in order to plan the logic to be implemented in the program.
@@ -73,8 +84,6 @@ As shown in the flowchart, the original order of some functions has been changed
 [Back to top ⇧](#macro-calculator)
 
 ## Features
-
-## Data Model
 
 ## Technologies Used
 
