@@ -1,5 +1,7 @@
 # Macro Calculator
 
+![Macro Calculator mockup image](assets/readme-files/mockup-image.png)
+
 Macro Calulator is designed to help the users discover how much of each macronutrient they should eat every day to reach the desire goal.
 
 There are three principal classes of macronutrients: carbohydrate, protein, and fat. Balancing these nutrients is a crucial element of success to any workout goal, whether looking to build muscle, lose fat, or improve athletic performance.
