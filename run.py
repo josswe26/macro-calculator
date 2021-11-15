@@ -7,7 +7,7 @@ import textwrap
 # COLOR TAGS
 
 i_color = Fore.LIGHTGREEN_EX        # Input color
-e_color = Back.RED + Fore.WHITE     # Error color
+e_color = Back.RED                  # Error color
 d_color = Fore.LIGHTYELLOW_EX       # Data color
 dim = Style.DIM                     # Dim text
 reset_all = Style.RESET_ALL         # Reset to normal
@@ -547,7 +547,7 @@ def select_diet():
         diet_selection = input(i_color +
                                '\nTo be able to calculate your daily macros, '
                                'choose your prefered diet. '
-                               '\nPlease enter a value between 1 and 6'
+                               '\nPlease enter a value between 1 and 6 '
                                'to select the desired diet:\n'
                                '\n1. Balanced.'
                                '\n2. Low-carb.'
