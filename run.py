@@ -46,7 +46,7 @@ def welcome_message():
                         'to high-carb, moderate- to low-fat diet.', 80))
 
 
-def data_review(name, age, gender, weight, height,
+def data_review(name, age, sex, weight, height,
                 weight_unit, height_unit, activity_level,
                 goal_data, diet):
     '''
@@ -62,7 +62,7 @@ def data_review(name, age, gender, weight, height,
 
     table.add_row(['Name', d_color + name.capitalize() + reset_all])
     table.add_row(['Age', d_color + f'{age}' + reset_all + ' years old'])
-    table.add_row(['Gender', d_color + gender.capitalize() + reset_all])
+    table.add_row(['Sex', d_color + sex.capitalize() + reset_all])
 
     table.add_row(['Weight', d_color + f'{weight}' +
                   reset_all + f' {weight_unit}'])
@@ -203,40 +203,40 @@ def collect_age():
             continue
 
 
-def select_gender():
+def select_sex():
     '''
-    Allow the user to select their gender
-    and return a dictionary including the gender data
+    Allow the user to select their sex
+    and return a dictionary including the sex data
     '''
     while True:
-        gender_selection = input(i_color +
-                                 '\nPlease select your gender\n'
+        sex_selection = input(i_color +
+                                 '\nPlease select your sex:\n'
                                  '\nFor female, please enter 1.\n'
                                  'For male, please enter 2.\n' +
                                  reset_all)
 
-        if gender_selection == '1':
+        if sex_selection == '1':
             print('\nFemale has been selected.')
-            gender_data = {
-                'gender': 'female',
+            sex_data = {
+                'sex': 'female',
                 'value': -161
             }
 
-            return gender_data
+            return sex_data
 
-        elif gender_selection == '2':
+        elif sex_selection == '2':
             print('\nMale has been selected')
-            gender_data = {
-                'gender': 'male',
+            sex_data = {
+                'sex': 'male',
                 'value': 5
             }
 
-            return gender_data
+            return sex_data
 
         else:
             print('\n' + e_color +
                   'Invalid selection. You need to enter 1 or 2 '
-                  'to select your gender.' +
+                  'to select your sex.' +
                   reset_all)
             continue
 
@@ -792,7 +792,7 @@ def convert_height(height_in_inch):
 # CALCULATION FUNCTIONS
 
 
-def calculate_bmr(weight, height, age, gender_value):
+def calculate_bmr(weight, height, age, sex_value):
     '''
     Calculate the user's basal metabolic rate (BMR) using
     the data provided by the user and return the result
@@ -806,7 +806,7 @@ def calculate_bmr(weight, height, age, gender_value):
     # [9.99 x weight (kg)] + [6.25 x height (cm)] – [4.92 x age (years)] + 5
     # Female BMR =
     # [9.99 x weight (kg)] + [6.25 x height (cm)] – [4.92 x age (years)] – 161
-    bmr = (9.99 * weight) + (6.25 * height) - (4.92 * age) + gender_value
+    bmr = (9.99 * weight) + (6.25 * height) - (4.92 * age) + sex_value
 
     return bmr
 
@@ -871,7 +871,7 @@ def main():
         name = collect_name()
 
         age = collect_age()
-        gender_data = select_gender()
+        sex_data = select_sex()
 
         unit = select_unit()
 
@@ -897,14 +897,14 @@ def main():
         # Display the data depending on the unit selected
         if unit == 1:
             data_correct = data_review(name, age,
-                                       gender_data['gender'],
+                                       sex_data['sex'],
                                        weight_in_kg, height_in_cm,
                                        'kg', 'cm',
                                        activity_data['activity level'],
                                        goal_data, macro_data['diet'])
         if unit == 2:
             data_correct = data_review(name, age,
-                                       gender_data['gender'],
+                                       sex_data['sex'],
                                        weight_in_lb, height_in_inch,
                                        'lb', 'inch',
                                        activity_data['activity level'],
@@ -915,7 +915,7 @@ def main():
             continue
 
         bmr = calculate_bmr(weight_in_kg, height_in_cm,
-                            age, gender_data['value'])
+                            age, sex_data['value'])
 
         tdee = calculate_tdee(bmr, activity_data['value'])
 
