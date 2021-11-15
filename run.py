@@ -20,32 +20,20 @@ def welcome_message():
     Display the welcome logo and message
     '''
     print(Style.BRIGHT + Fore.LIGHTYELLOW_EX + '''
-    #     #
-    #  #  # ###### #       ####   ####  #    # ######    #####  ####
-    #  #  # #      #      #    # #    # ##  ## #           #   #    #
-    #  #  # #####  #      #      #    # # ## # #####       #   #    #
-    #  #  # #      #      #      #    # #    # #           #   #    #
-    #  #  # #      #      #    # #    # #    # #           #   #    #
-     ## ##  ###### ######  ####   ####  #    # ######      #    ####
-
-                   #     #
                    ##   ##   ##    ####  #####   ####
-                   # # # #  #  #  #    # #    # #    #
-                   #  #  # #    # #      #    # #    #
+                   #  #  # #    # #    # #    # #    #
                    #     # ###### #      #####  #    #
                    #     # #    # #    # #   #  #    #
                    #     # #    #  ####  #    #  ####
 
-   #####
-  #     #   ##   #       ####  #    # #        ##   #####  ####  #####
-  #        #  #  #      #    # #    # #       #  #    #   #    # #    #
-  #       #    # #      #      #    # #      #    #   #   #    # #    #
+   ####     ##   #       ####  #    # #        ##   #####  ####  #####
+  #    #  #    # #      #    # #    # #      #    #   #   #    # #    #
   #       ###### #      #      #    # #      ######   #   #    # #####
-  #     # #    # #      #    # #    # #      #    #   #   #    # #   #
-   #####  #    # ######  ####   ####  ###### #    #   #    ####  #    #
+  #    #  #    # #      #    # #    # #      #    #   #   #    # #   #
+   ####   #    # ######  ####   ####  ###### #    #   #    ####  #    #
     ''')
 
-    print(reset_all)
+    print(reset_all + 'Welcome to Macro Calculator!\n')
     print(textwrap.fill('Use the Macro Calculator to help you discover how '
                         'much of each macronutrient you should eat every day '
                         'to reach your goals.', 80))
