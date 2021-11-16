@@ -29,6 +29,7 @@ There are three principal classes of macronutrients: carbohydrate, protein, and 
     1. [Language Used](#language-used)
     2. [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)
 4. [Testing](#testing)
+    1. [Testing User Stories](#testing-user-stories)
 5. [Deployment](#deployment)
 6. [Credits](#credits)
 7. [Acknowledgements](#acknowledgements)
@@ -246,6 +247,42 @@ It was decided not to implement this feature at this point as it became bit conf
 
 ## Testing
 
+### Testing User Stories
+
+* As a user, I want to receive information about the main objective of the program.
+
+    - Information about the program is presented in the welcome message explaining the use of the application.
+
+    - Details are provided together with the results to further explain the different terms.
+
+* As a user, I want to easily understand what input is needed on each step.
+
+    - Input messages are being provided with detailed information on what the input needs to be.
+
+    - Input messages text is colored in light green to make them noticeable.
+
+* As a user, I want to receive clear feedback in case I provide the wrong input.
+
+    - Error messages are provided explaining what is wrong with the input provided in case the wrong input is entered.
+
+    - Some values as age, weight and height are being limited in order to gather the correct information and avoid mistypes.
+
+    - Error messages have a red background to make them noticeable.
+
+* As a user, I want to be able to review the data I provided and correct it if needed.
+
+    - Added a feature where the user can easily see the data entered and decide to continue or enter the data again.
+
+    - The data is being presented in table format to make it easier to review.
+
+    - The input data is colored in light yellow to make it as clear as possible.
+
+* As a user, I want the calculations to be displayed in a clear way and to be easy to understand.
+
+    - Calculations are being formatted and presented at the end of the program with explanation for the different results.
+
+    - The result data is colored in light yellow to make it as clear as possible.
+
 ## Deployment
 
 The application has been deployed using [Heroku](https://id.heroku.com/) by following these steps:
@@ -267,6 +304,8 @@ The application has been deployed using [Heroku](https://id.heroku.com/) by foll
 13. Go to "Connect to GitHub" section and "Search" the repository to be deployed.
 14. Click "Connect" next the repository name.
 15. Choose "Automatic deploys" or "Manual deploys" to deploy your application.
+
+[Back to top ⇧](#macro-calculator)
 
 ## Credits
 
