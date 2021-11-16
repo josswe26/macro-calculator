@@ -289,7 +289,7 @@ It was decided not to implement this feature at this point as it became bit conf
 
 ### Code Validation
 
-[PEP8 online check](http://pep8online.com/) was used to validate the Python code for PEP8 requirements.
+The [PEP8 online check](http://pep8online.com/) was used continuosly during the development proces to validate the Python code for PEP8 requirements. For this reason no before and after snapshots are available.
 
 ![PEP8 Code Validation](assets/readme-files/pep8-code-validation.png)
 
