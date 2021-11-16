@@ -125,6 +125,8 @@ Allow the users to select their desired goal . The program will then use this go
 
 Allow the users to select thier prefered diet. This diet will dictate the split of the macronutrients.
 
+![Diet Selection](assets/readme-files/diet.png)
+
 ### Review Data
 
 Allow the users to review the data input and give them the possibility to enter the data again if a mistake has been made.
