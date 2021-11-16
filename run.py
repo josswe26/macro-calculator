@@ -210,10 +210,10 @@ def select_sex():
     '''
     while True:
         sex_selection = input(i_color +
-                                 '\nPlease select your sex:\n'
-                                 '\nFor female, please enter 1.\n'
-                                 'For male, please enter 2.\n' +
-                                 reset_all)
+                              '\nPlease select your sex:\n'
+                              '\nFor female, please enter 1.\n'
+                              'For male, please enter 2.\n' +
+                              reset_all)
 
         if sex_selection == '1':
             print('\nFemale has been selected.')

@@ -26,6 +26,8 @@ There are three principal classes of macronutrients: carbohydrate, protein, and 
     10. [Macronutrients Calculator](#macronutrients-calculator)
     11. [Restart Program](#restart-program)
 3. [Technologies Used](#technologies-used)
+    1. [Languages Used](#languages-used)
+    2. [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)
 4. [Testing](#testing)
 5. [Deployment](#deployment)
 6. [Credits](#credits)
@@ -59,7 +61,7 @@ There are three principal classes of macronutrients: carbohydrate, protein, and 
 
 ### Color Scheme
 
-Colorama has been used to apply color to the terminal text. This in order to make the program more intuitive and easier to read. 
+[Colorama](https://pypi.org/project/colorama/) has been used to apply color to the terminal text. This in order to make the program more intuitive and easier to read. 
 
 Here are the colors being used:
 
@@ -211,6 +213,26 @@ Allow the user to keep running or exit the program.
 [Back to top ⇧](#macro-calculator)
 
 ## Technologies Used
+
+### Language Used
+
+[Python3](https://en.wikipedia.org/wiki/Python_(programming_language))
+
+### Frameworks, Libraries and Programs Used
+
+* [GitPod](https://gitpod.io/) was used for writing code, committing, and then pushing to GitHub.
+
+* [GitHub](https://github.com/) was used to store the project after pushing.
+
+* [Heroku](https://id.heroku.com/) was used to deploy the application.
+
+* [PEP8 online check](http://pep8online.com/) was used to validate the Python code.
+
+* [PrettyTable](https://pypi.org/project/prettytable/) library was used to present the data in table format.
+
+* [Colorama](https://pypi.org/project/colorama/) library was used to apply color to the terminal text. 
+
+* [Miro](https://miro.com/) was used to create the program flowchart.
 
 ## Testing
 
