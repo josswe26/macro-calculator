@@ -509,4 +509,24 @@ The application has been deployed using [Heroku](https://id.heroku.com/) by foll
 
 ## Credits
 
+### Content
+
+* Inspiration for the calculator and the explanations were taken from [Legion Athletics](https://legionathletics.com/) as well as the Mifflin-St Jeor formula to calculate the [BMR](https://legionathletics.com/what-is-bmr/).
+
+* The activity multipliers to calculate the TDEE was taken from the [Physical Activity and Controlling Weight ](https://www.k-state.edu/paccats/Contents/PA/PDF/Physical%20Activity%20and%20Controlling%20Weight.pdf) document found at the [Kansas State University](https://www.k-state.edu/) website.
+
+### Media
+* The ASCII art is a modified version of an original art created with [ASCII-Generator](https://ascii-generator.site/).
+
+### Code
+* [Stack Overflow](https://stackoverflow.com/) was consulted on a regular basis for inspiration and sometimes to be able to better understand the code being implement.
+
+[Back to top ⇧](#macro-calculator)
+
 ## Acknowledgements
+
+* My partner, for her unconditional love, help and continued support in all aspects of life to make possible for me to complete this project.
+
+* My tutor, Marcel, for his invaluable feedback and guidance.
+
+* Code Institute and its amazing Slack community for their support and providing me with the necessary knowledge to complete this project.
