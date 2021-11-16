@@ -30,6 +30,7 @@ There are three principal classes of macronutrients: carbohydrate, protein, and 
     2. [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)
 4. [Testing](#testing)
     1. [Testing User Stories](#testing-user-stories)
+    2. [Code Validation](#code-validation)
 5. [Deployment](#deployment)
 6. [Credits](#credits)
 7. [Acknowledgements](#acknowledgements)
@@ -282,6 +283,14 @@ It was decided not to implement this feature at this point as it became bit conf
     - Calculations are being formatted and presented at the end of the program with explanation for the different results.
 
     - The result data is colored in light yellow to make it as clear as possible.
+
+### Code Validation
+
+[PEP8 online check](http://pep8online.com/) was used to validate the Python code for PEP8 requirements.
+
+![PEP8 Code Validation](assets/readme-files/pep8-code-validation.png)
+
+[Back to top ⇧](#macro-calculator)
 
 ## Deployment
 
