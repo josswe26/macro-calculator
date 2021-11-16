@@ -26,7 +26,7 @@ There are three principal classes of macronutrients: carbohydrate, protein, and 
     10. [Macronutrients Calculator](#macronutrients-calculator)
     11. [Restart Program](#restart-program)
 3. [Technologies Used](#technologies-used)
-    1. [Languages Used](#languages-used)
+    1. [Language Used](#language-used)
     2. [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)
 4. [Testing](#testing)
 5. [Deployment](#deployment)
@@ -210,13 +210,21 @@ Allow the user to keep running or exit the program.
 
 ![Program Loop Question](assets/readme-files/keep-running.png)
 
+### Future Features
+
+**Custom Macronutrients Split**
+
+The developer is planning to implement the possibility to input custom macronutrients split when selecting the diet. This will be done by selecting a custom diet and then entering a percentage for each macronutrient (protein, carbs and fat).
+
+It was decided not to implement this feature at this point as it became bit confusing for the user. Once this feature is implemented it will need to be very intuitive to use.
+
 [Back to top ⇧](#macro-calculator)
 
 ## Technologies Used
 
 ### Language Used
 
-[Python3](https://en.wikipedia.org/wiki/Python_(programming_language))
+* [Python3](https://en.wikipedia.org/wiki/Python_(programming_language))
 
 ### Frameworks, Libraries and Programs Used
 
@@ -233,6 +241,8 @@ Allow the user to keep running or exit the program.
 * [Colorama](https://pypi.org/project/colorama/) library was used to apply color to the terminal text. 
 
 * [Miro](https://miro.com/) was used to create the program flowchart.
+
+[Back to top ⇧](#macro-calculator)
 
 ## Testing
 
