@@ -612,6 +612,10 @@ def restart_program():
 
     if run_again == 'n':
         print('\nThank you for using Macro Calculator. See you next time!')
+        print(textwrap.fill(dim +
+                            'If you change your mind and want to run the '
+                            'program again just press "RUN PROGRAM" or '
+                            'refresh the page.' + reset_all, 70))
         return False
     else:
         return True
