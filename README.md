@@ -6,7 +6,7 @@ Macro Calulator is designed to help the users discover how much of each macronut
 
 There are three principal classes of macronutrients: carbohydrate, protein, and fat. Balancing these nutrients is a crucial element of success to any workout goal, whether looking to build muscle, lose fat, or improve athletic performance.
 
-Visit the deployed application [here](https://macro-calculator.herokuapp.com/).
+Visit the deployed application [here](https://macro-calculator.onrender.com).
 
 ## Table of Contents
 1. [User Experience (UX)](#user-experience-UX)
